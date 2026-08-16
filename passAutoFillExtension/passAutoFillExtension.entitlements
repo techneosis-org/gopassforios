@@ -6,11 +6,11 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.me.mssun.passforios</string>
+		<string>group.com.techneosis.gopassforios</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)group.me.mssun.passforios</string>
+		<string>$(AppIdentifierPrefix)group.com.techneosis.gopassforios</string>
 	</array>
 </dict>
 </plist>
