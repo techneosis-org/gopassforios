@@ -30,7 +30,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC917BD21E2E8231000FDF54"
-               BuildableName = "Pass.app"
+               BuildableName = "gopass.app"
                BlueprintName = "pass"
                ReferencedContainer = "container:pass.xcodeproj">
             </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC917BD21E2E8231000FDF54"
-            BuildableName = "Pass.app"
+            BuildableName = "gopass.app"
             BlueprintName = "pass"
             ReferencedContainer = "container:pass.xcodeproj">
          </BuildableReference>
@@ -78,14 +78,13 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES"
-      askForAppToLaunch = "Yes"
       launchAutomaticallySubstyle = "2">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC917BD21E2E8231000FDF54"
-            BuildableName = "Pass.app"
+            BuildableName = "gopass.app"
             BlueprintName = "pass"
             ReferencedContainer = "container:pass.xcodeproj">
          </BuildableReference>
