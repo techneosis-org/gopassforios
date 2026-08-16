@@ -518,7 +518,7 @@
 		DC6474602D46A8F2004B4BBC /* GitRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryTest.swift; sourceTree = "<group>"; };
 		DC7CBBBE2D0FAC8E003BB4D2 /* YKFSmartCardInterfaceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YKFSmartCardInterfaceExtension.swift; sourceTree = "<group>"; };
 		DC8963BF1E38EEB900828B09 /* SSHKeyURLImportTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSHKeyURLImportTableViewController.swift; sourceTree = "<group>"; };
-		DC917BD31E2E8231000FDF54 /* Pass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pass.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC917BD31E2E8231000FDF54 /* gopass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gopass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC917BD61E2E8231000FDF54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC917BDB1E2E8231000FDF54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC917BDD1E2E8231000FDF54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1098,7 +1098,7 @@
 		DC917BD41E2E8231000FDF54 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DC917BD31E2E8231000FDF54 /* Pass.app */,
+				DC917BD31E2E8231000FDF54 /* gopass.app */,
 				DC13B14E1E8640810097803F /* passTests.xctest */,
 				A26700241EEC466A00176B8A /* passExtension.appex */,
 				A26075781EEC6F34005DB03E /* passKit.framework */,
@@ -1315,7 +1315,7 @@
 				30333B2A2CF924DC008A2EA2 /* SVProgressHUD */,
 			);
 			productName = pass;
-			productReference = DC917BD31E2E8231000FDF54 /* Pass.app */;
+			productReference = DC917BD31E2E8231000FDF54 /* gopass.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2049,7 +2049,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-D BETA";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techneosis.gopassforiosbeta;
-				PRODUCT_NAME = "Pass Beta";
+				PRODUCT_NAME = "gopass Beta";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -2117,7 +2117,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pass.app/Pass";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gopass.app/gopass";
 			};
 			name = Beta;
 		};
@@ -2217,7 +2217,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pass.app/Pass";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gopass.app/gopass";
 			};
 			name = Beta;
 		};
@@ -2462,7 +2462,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pass.app/Pass";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gopass.app/gopass";
 			};
 			name = Debug;
 		};
@@ -2486,7 +2486,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pass.app/Pass";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gopass.app/gopass";
 			};
 			name = Release;
 		};
@@ -2583,7 +2583,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pass.app/Pass";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gopass.app/gopass";
 			};
 			name = Debug;
 		};
@@ -2608,7 +2608,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pass.app/Pass";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gopass.app/gopass";
 			};
 			name = Release;
 		};
@@ -2675,7 +2675,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techneosis.gopassforios;
-				PRODUCT_NAME = Pass;
+				PRODUCT_NAME = gopass;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2742,7 +2742,7 @@
 				MARKETING_VERSION = 0.19.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techneosis.gopassforios;
-				PRODUCT_NAME = Pass;
+				PRODUCT_NAME = gopass;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
