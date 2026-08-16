@@ -1,23 +1,44 @@
 <img src="icon/icon_round.png" width="76"/>
 
-# Pass
-[![GitHub release](https://img.shields.io/github/release/mssun/passforios.svg)](https://github.com/mssun/passforios/releases)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/passforios/passforios)
-[![Build Status](https://github.com/mssun/passforios/workflows/Deploying/badge.svg)](https://github.com/mssun/passforios/actions)
-[![Donate](https://img.shields.io/badge/paypal-donate-blue.svg)](https://www.paypal.me/mssun)
+# gopassforios
 
-Pass is an iOS client compatible with [ZX2C4's Pass command line application](http://www.passwordstore.org/).
-It is a password manager using GPG for encryption and Git for version control.
+An iOS password-store client aimed at [gopass](https://www.gopass.pw/) setups.
 
-Pass for iOS is available in App Store with the name "Pass - Password Store", and both iPhone and iPad are supported.
+This is a fork of [Pass for iOS](https://github.com/mssun/passforios) by
+Mingshen Sun — an excellent client, and all of the hard work here is his and
+his contributors'. Upstream targets a single [`pass`](https://www.passwordstore.org/)
+store, which is the one thing a gopass user tends not to have.
 
-<p>
-<a href="https://itunes.apple.com/us/app/pass-password-store/id1205820573?mt=8"><img alt="Download on the App Store" src="img/app_store_badge.svg" width="150"/></a>
-</p>
+**Not affiliated with the gopass project.**
 
-You can also help us test beta versions through [TestFlight](https://testflight.apple.com/join/whK4zUFG).
+## Why this fork
+
+gopass stores are ordinary `pass` stores on disk — GPG-encrypted files in a git
+repository — so nothing about the format needs porting. Two things differ:
+
+- **Multiple stores.** gopass mounts several repositories at once, each with its
+  own git remote and its own recipients. Upstream models exactly one.
+- **age encryption.** gopass can use age instead of GPG, including SSH keys as
+  recipients. Upstream is GPG-only.
+
+## Status
+
+Early. Today this is upstream Pass for iOS, rebranded so it can be installed
+alongside the App Store release — it clones one store and decrypts it, exactly
+as upstream does.
+
+| | |
+|---|---|
+| multiple stores | in progress |
+| age backend | planned |
+
+Neither is implemented yet. If you need a working single-store client today,
+use [upstream](https://github.com/mssun/passforios) — it's on the App Store and
+it's maintained.
 
 ## Features
+
+Inherited from upstream:
 
 - Compatible with the Password Store command line tool.
 - View, copy, add, and edit password entries.
@@ -25,33 +46,23 @@ You can also help us test beta versions through [TestFlight](https://testflight.
 - Synchronize with your password Git repository.
 - User-friendly interface: search, long press to copy, copy and open link, etc.
 - Support one-time password tokens (two-factor authentication codes).
-- AutoFill in Safari/Chrome and [supported apps](https://github.com/agilebits/onepassword-app-extension).
+- AutoFill in Safari/Chrome and supported apps.
 - Support YubiKey.
 
-## Screenshots
-
-<p>
-<img src="img/screenshot1.png" width="200"/>
-<img src="img/screenshot2.png" width="200"/>
-<img src="img/screenshot3.png" width="200"/>
-<img src="img/screenshot4.png" width="200"/>
-</p>
-
-## Usages
-
-- Setup your password-store ([official `Pass` introduction](https://www.passwordstore.org/))
-- Get Pass for iOS from the App Store or [build by yourself](https://github.com/mssun/passforios/wiki/Building-Pass-for-iOS)
-- Setup Pass for iOS ([quick-start guide](https://github.com/mssun/passforios/wiki#quick-start-guide-for-pass-for-ios))
-
-For more, please read the [wiki page](https://github.com/mssun/passforios/wiki).
-
-## Building Pass for iOS
+## Building
 
 1. Install Go: `brew install go`.
 1. Run `./scripts/gopenpgp_build.sh` to build GopenPGP.
 1. Open the `pass.xcodeproj` file in Xcode.
+1. Set `DEVELOPMENT_TEAM` to your own Apple team, and change the bundle
+   identifiers from `com.techneosis.gopassforios` to something you own.
 1. Build & Run.
+
+Upstream's [wiki](https://github.com/mssun/passforios/wiki) remains the best
+reference for setting up keys and a git remote; the app's configuration is
+unchanged from theirs.
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE). Copyright for the original work remains with
+Bob Sun and the Pass for iOS contributors.
