@@ -25,9 +25,9 @@ public struct PasswordStoreConfig: Codable, Equatable, Identifiable {
     public var username: String
 
     public init(
-        id: UUID = UUID(),
         name: String,
         gitURL: URL,
+        id: UUID = UUID(),
         branchName: String = "main",
         authenticationMethod: GitAuthenticationMethod = .password,
         username: String = "git"
@@ -78,9 +78,9 @@ public extension PasswordStoreConfig {
             )
         }
         self.init(
-            id: try container.decode(UUID.self, forKey: .id),
             name: try container.decode(String.self, forKey: .name),
             gitURL: try container.decode(URL.self, forKey: .gitURL),
+            id: try container.decode(UUID.self, forKey: .id),
             branchName: try container.decode(String.self, forKey: .branchName),
             authenticationMethod: method,
             username: try container.decode(String.self, forKey: .username)
