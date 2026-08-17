@@ -29,6 +29,12 @@ public final class Globals {
     public static let gitSSHPrivateKeyPath = documentPath + "/ssh_key"
     public static let repositoryURL = sharedContainerURL.appendingPathComponent("Library/password-store/")
 
+    /// Parent directory of the per-store working copies. Each mounted store is
+    /// checked out into a subdirectory named after its identifier, keeping the
+    /// stores independent of one another and of the legacy single-store path
+    /// above.
+    public static let storesURL = sharedContainerURL.appendingPathComponent("Library/stores/", isDirectory: true)
+
     public static let dbPath = documentPath + "/pass.sqlite"
     public static let dbURL = URL(fileURLWithPath: dbPath)
 
