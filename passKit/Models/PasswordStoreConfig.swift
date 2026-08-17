@@ -24,6 +24,11 @@ public struct PasswordStoreConfig: Codable, Equatable, Identifiable {
     public var authenticationMethod: GitAuthenticationMethod
     public var username: String
 
+    /// Identifier of the single store that predates multi-store support.
+    /// Entries carrying it resolve against `Globals.repositoryURL` rather than
+    /// a per-store checkout, so the existing clone keeps working untouched.
+    public static let legacyStoreID = "legacy"
+
     public init(
         name: String,
         gitURL: URL,

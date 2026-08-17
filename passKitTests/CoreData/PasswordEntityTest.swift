@@ -18,7 +18,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         (0 ..< expectedCount).forEach { index in
             let name = String(format: "Generated %05d", index)
             let path = String(format: "/%05d", index)
-            PasswordEntity.insert(name: name, path: path, isDir: false, into: context)
+            PasswordEntity.insert(name: name, path: path, isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
         }
         let count = PasswordEntity.fetchAllPassword(in: context).count
         XCTAssertEqual(expectedCount, count)
@@ -27,23 +27,23 @@ final class PasswordEntityTest: CoreDataTestCase {
 
     func testTotalNumber() throws {
         let context = controller.viewContext()
-        PasswordEntity.insert(name: "1", path: "path1", isDir: false, into: context)
-        PasswordEntity.insert(name: "2", path: "path2", isDir: false, into: context)
-        PasswordEntity.insert(name: "3", path: "path3", isDir: true, into: context)
+        PasswordEntity.insert(name: "1", path: "path1", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
+        PasswordEntity.insert(name: "2", path: "path2", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
+        PasswordEntity.insert(name: "3", path: "path3", isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
         XCTAssertEqual(2, PasswordEntity.totalNumber(in: context))
         PasswordEntity.deleteAll(in: context)
     }
 
     func testFetchUnsynced() throws {
         let context = controller.viewContext()
-        let syncedPasswordEntity = PasswordEntity.insert(name: "1", path: "path", isDir: false, into: context)
+        let syncedPasswordEntity = PasswordEntity.insert(name: "1", path: "path", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
         syncedPasswordEntity.isSynced = true
 
         let expectedCount = 5
         (0 ..< expectedCount).forEach { index in
             let name = String(format: "Generated %05d", index)
             let path = String(format: "/%05d", index)
-            PasswordEntity.insert(name: name, path: path, isDir: false, into: context)
+            PasswordEntity.insert(name: name, path: path, isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
         }
         let count = PasswordEntity.fetchUnsynced(in: context).count
         XCTAssertEqual(expectedCount, count)
@@ -52,8 +52,8 @@ final class PasswordEntityTest: CoreDataTestCase {
 
     func testFetchByPath() throws {
         let context = controller.viewContext()
-        PasswordEntity.insert(name: "1", path: "path1", isDir: false, into: context)
-        PasswordEntity.insert(name: "2", path: "path2", isDir: true, into: context)
+        PasswordEntity.insert(name: "1", path: "path1", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
+        PasswordEntity.insert(name: "2", path: "path2", isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
         let passwordEntity = PasswordEntity.fetch(by: "path1", in: context)!
         XCTAssertEqual(passwordEntity.path, "path1")
         XCTAssertEqual(passwordEntity.name, "1")
@@ -61,10 +61,10 @@ final class PasswordEntityTest: CoreDataTestCase {
 
     func testFetchByParent() throws {
         let context = controller.viewContext()
-        let parent = PasswordEntity.insert(name: "parent", path: "path1", isDir: true, into: context)
-        let child1 = PasswordEntity.insert(name: "child1", path: "path2", isDir: false, into: context)
-        let child2 = PasswordEntity.insert(name: "child2", path: "path3", isDir: true, into: context)
-        let child3 = PasswordEntity.insert(name: "child3", path: "path4", isDir: false, into: context)
+        let parent = PasswordEntity.insert(name: "parent", path: "path1", isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
+        let child1 = PasswordEntity.insert(name: "child1", path: "path2", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
+        let child2 = PasswordEntity.insert(name: "child2", path: "path3", isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
+        let child3 = PasswordEntity.insert(name: "child3", path: "path4", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
         parent.children = [child1, child2]
         child2.children = [child3]
         let childern = PasswordEntity.fetch(by: parent, in: context)
@@ -74,10 +74,10 @@ final class PasswordEntityTest: CoreDataTestCase {
     func testDeleteRecursively() throws {
         let context = controller.viewContext()
 
-        let parent = PasswordEntity.insert(name: "parent", path: "path1", isDir: true, into: context)
-        let child1 = PasswordEntity.insert(name: "child1", path: "path2", isDir: true, into: context)
-        let child2 = PasswordEntity.insert(name: "child2", path: "path3", isDir: false, into: context)
-        let child3 = PasswordEntity.insert(name: "child3", path: "path4", isDir: false, into: context)
+        let parent = PasswordEntity.insert(name: "parent", path: "path1", isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
+        let child1 = PasswordEntity.insert(name: "child1", path: "path2", isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
+        let child2 = PasswordEntity.insert(name: "child2", path: "path3", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
+        let child3 = PasswordEntity.insert(name: "child3", path: "path4", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
         parent.children = [child1, child2]
         child1.children = [child3]
         PasswordEntity.deleteRecursively(entity: child2, in: context)
@@ -112,7 +112,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         try Data("test5".utf8).write(to: rootDir.appendingPathComponent("notes.txt"))
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
 
         // Verify total counts
         let allEntities = PasswordEntity.fetchAll(in: context)
@@ -153,7 +153,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         try Data("test".utf8).write(to: rootDir.appendingPathComponent(".git/config"))
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
 
         let allEntities = PasswordEntity.fetchAll(in: context)
         XCTAssertEqual(allEntities.count, 1)
@@ -171,7 +171,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         try Data("test".utf8).write(to: rootDir.appendingPathComponent("no-extension"))
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
 
         let allEntities = PasswordEntity.fetchAll(in: context)
         XCTAssertEqual(allEntities.count, 1)
@@ -196,7 +196,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createSymbolicLink(atPath: webDir.appendingPathComponent("example.org.gpg").path, withDestinationPath: "../example.com.gpg")
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
 
         let allEntities = PasswordEntity.fetchAll(in: context)
         XCTAssertEqual(allEntities.filter { !$0.isDir }.count, 3)
@@ -229,7 +229,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createSymbolicLink(atPath: rootDir.appendingPathComponent("mail").path, withDestinationPath: "email")
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
 
         let allEntities = PasswordEntity.fetchAll(in: context)
 
@@ -260,7 +260,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createSymbolicLink(atPath: rootDir.appendingPathComponent("here").path, withDestinationPath: ".")
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
 
         let allEntities = PasswordEntity.fetchAll(in: context)
         XCTAssertEqual(Set(allEntities.map(\.path)), ["email", "email/up", "here"])
@@ -274,7 +274,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createSymbolicLink(atPath: rootDir.appendingPathComponent("broken.gpg").path, withDestinationPath: "missing.gpg")
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
 
         let allEntities = PasswordEntity.fetchAll(in: context)
         XCTAssertEqual(allEntities.count, 1)
@@ -291,7 +291,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createDirectory(at: rootDir.appendingPathComponent("emptydir"), withIntermediateDirectories: true)
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
 
         let allEntities = PasswordEntity.fetchAll(in: context)
         let dirs = allEntities.filter(\.isDir)

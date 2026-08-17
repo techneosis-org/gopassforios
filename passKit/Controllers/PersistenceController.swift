@@ -44,7 +44,7 @@ public class PersistenceController {
                 fatalError("Failed to load persistent stores: \(finalError.localizedDescription)")
             }
         }
-        PasswordEntity.initPasswordEntityCoreData(url: repositoryURL, in: container.viewContext)
+        PasswordEntity.initPasswordEntityCoreData(url: repositoryURL, store: PasswordStoreConfig.legacyStoreID, in: container.viewContext)
         try? container.viewContext.save()
     }
 

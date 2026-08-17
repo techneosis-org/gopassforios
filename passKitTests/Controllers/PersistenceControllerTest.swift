@@ -25,7 +25,7 @@ final class PersistenceControllerTest: XCTestCase {
         let context = controller.viewContext()
         XCTAssertEqual(PasswordEntity.fetchAll(in: context).count, 0)
 
-        PasswordEntity.insert(name: "test", path: "test.gpg", isDir: false, into: context)
+        PasswordEntity.insert(name: "test", path: "test.gpg", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
         try? context.save()
 
         XCTAssertEqual(PasswordEntity.fetchAll(in: context).count, 1)
@@ -35,8 +35,8 @@ final class PersistenceControllerTest: XCTestCase {
         let controller = PersistenceController.forUnitTests()
         let context = controller.viewContext()
 
-        PasswordEntity.insert(name: "test1", path: "test1.gpg", isDir: false, into: context)
-        PasswordEntity.insert(name: "test2", path: "test2.gpg", isDir: false, into: context)
+        PasswordEntity.insert(name: "test1", path: "test1.gpg", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
+        PasswordEntity.insert(name: "test2", path: "test2.gpg", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
         try? context.save()
         XCTAssertEqual(PasswordEntity.fetchAll(in: context).count, 2)
 
@@ -57,7 +57,7 @@ final class PersistenceControllerTest: XCTestCase {
         let context1 = controller1.viewContext()
         let context2 = controller2.viewContext()
 
-        PasswordEntity.insert(name: "only-in-1", path: "only-in-1.gpg", isDir: false, into: context1)
+        PasswordEntity.insert(name: "only-in-1", path: "only-in-1.gpg", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context1)
         try? context1.save()
 
         XCTAssertEqual(PasswordEntity.fetchAll(in: context1).count, 1)
@@ -73,8 +73,8 @@ final class PersistenceControllerTest: XCTestCase {
         // Write
         let controller1 = PersistenceController(storeURL: storeURL)
         let context1 = controller1.viewContext()
-        PasswordEntity.insert(name: "saved", path: "saved.gpg", isDir: false, into: context1)
-        PasswordEntity.insert(name: "dir", path: "dir", isDir: true, into: context1)
+        PasswordEntity.insert(name: "saved", path: "saved.gpg", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context1)
+        PasswordEntity.insert(name: "dir", path: "dir", isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context1)
         controller1.save()
 
         // Load in a fresh controller from the same file

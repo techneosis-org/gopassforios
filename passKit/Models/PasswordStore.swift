@@ -159,7 +159,7 @@ public class PasswordStore {
     }
 
     private func initPasswordEntityCoreData() {
-        PasswordEntity.initPasswordEntityCoreData(url: storeURL, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: storeURL, store: PasswordStoreConfig.legacyStoreID, in: context)
         saveUpdatedContext()
     }
 
@@ -242,7 +242,7 @@ public class PasswordStore {
         var parentPasswordEntity: PasswordEntity?
         for (index, path) in paths.reversed().enumerated() {
             if index == paths.count - 1 {
-                let passwordEntity = PasswordEntity.insert(name: password.name, path: path, isDir: false, into: context)
+                let passwordEntity = PasswordEntity.insert(name: password.name, path: path, isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
                 passwordEntity.parent = parentPasswordEntity
                 parentPasswordEntity = passwordEntity
             } else {
@@ -251,7 +251,7 @@ public class PasswordStore {
                     parentPasswordEntity = passwordEntity
                 } else {
                     let name = (path as NSString).lastPathComponent
-                    let passwordEntity = PasswordEntity.insert(name: name, path: path, isDir: true, into: context)
+                    let passwordEntity = PasswordEntity.insert(name: name, path: path, isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
                     passwordEntity.parent = parentPasswordEntity
                     parentPasswordEntity = passwordEntity
                 }

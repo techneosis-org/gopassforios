@@ -22,8 +22,12 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
     /// A Boolean value indicating whether the entity is synced with remote repository.
     @NSManaged public var isSynced: Bool
 
-    /// The relative file path of the password or directory.
+    /// The relative file path of the password or directory, within its store.
     @NSManaged public var path: String
+
+    /// Identifier of the store this entry belongs to. `path` is only unique
+    /// within a store, so anything resolving an entry to a file needs both.
+    @NSManaged public var store: String
 
     /// The thumbnail image of the password if there is a url entry in the password.
     @NSManaged public var image: Data?
@@ -143,16 +147,17 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
     }
 
     @discardableResult
-    public static func insert(name: String, path: String, isDir: Bool, into context: NSManagedObjectContext) -> PasswordEntity {
+    public static func insert(name: String, path: String, isDir: Bool, store: String, into context: NSManagedObjectContext) -> PasswordEntity {
         let entity = PasswordEntity(context: context)
         entity.name = name
         entity.path = path
         entity.isDir = isDir
         entity.isSynced = false
+        entity.store = store
         return entity
     }
 
-    public static func initPasswordEntityCoreData(url: URL, in context: NSManagedObjectContext) {
+    public static func initPasswordEntityCoreData(url: URL, store: String, in context: NSManagedObjectContext) {
         let localFileManager = FileManager.default
         let url = url.resolvingSymlinksInPath()
 
@@ -161,6 +166,7 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
             entity.name = "root"
             entity.isDir = true
             entity.path = ""
+            entity.store = store
             return entity
         }()
         // Directories are enumerated through their resolved URL, so that symbolically linked
@@ -189,6 +195,7 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
                 }
                 let passwordEntity = PasswordEntity(context: context)
                 passwordEntity.isDir = isDirectory
+                passwordEntity.store = store
                 if isDirectory {
                     passwordEntity.name = name
                     if !ancestors.contains(resolvedURL.path) {

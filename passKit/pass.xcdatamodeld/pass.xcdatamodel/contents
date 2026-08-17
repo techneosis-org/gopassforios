@@ -6,6 +6,7 @@
         <attribute name="isSynced" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="path" attributeType="String"/>
+        <attribute name="store" attributeType="String" defaultValueString=""/>
         <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PasswordEntity" inverseName="parent" inverseEntity="PasswordEntity"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PasswordEntity" inverseName="children" inverseEntity="PasswordEntity"/>
     </entity>
