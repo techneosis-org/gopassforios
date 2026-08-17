@@ -116,6 +116,7 @@
 		5F9D7B0E27AF6FCA00A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5F9D7B0F27AF6FD200A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7EA9DD2979A26B815D87389B /* PasswordStoreRegistryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54025A6C408C208E78DA2A51 /* PasswordStoreRegistryTest.swift */; };
+		80F4794927A70C9622E1BFC9 /* PasswordStoreManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F244ADBB93C027EB76F38F /* PasswordStoreManagerTest.swift */; };
 		8A4716692F5EF56900C7A64D /* AppKeychainTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4716682F5EF56900C7A64D /* AppKeychainTest.swift */; };
 		8A4716712F5EF7A900C7A64D /* PersistenceControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A47166F2F5EF7A900C7A64D /* PersistenceControllerTest.swift */; };
 		8A4756A32F6374CC00131B6D /* PersistenceController+UnitTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4756A22F6374B700131B6D /* PersistenceController+UnitTestHelpers.swift */; };
@@ -185,6 +186,7 @@
 		A2A7813F1E97DBD9001311F5 /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7813E1E97DBD9001311F5 /* QRScannerController.swift */; };
 		A2AA934422DE30DD00D79A00 /* PGPAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA934322DE30DD00D79A00 /* PGPAgent.swift */; };
 		A2AA934622DE3A8000D79A00 /* PGPAgentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA934522DE3A8000D79A00 /* PGPAgentTest.swift */; };
+		B8C4F76D9E5BC1969DCEC108 /* PasswordStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ACDE0712F5BEFC8F6FA852 /* PasswordStoreManager.swift */; };
 		BDA5205597805CDF5E5ED446 /* PasswordStoreRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80F05CCDB74C55EF962721B /* PasswordStoreRegistry.swift */; };
 		DC037CA61E4B883900609409 /* OpenSourceComponentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC037CA51E4B883900609409 /* OpenSourceComponentsTableViewController.swift */; };
 		DC037CA81E4B898100609409 /* BasicStaticTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC037CA71E4B898100609409 /* BasicStaticTableViewController.swift */; };
@@ -342,6 +344,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		17ACDE0712F5BEFC8F6FA852 /* PasswordStoreManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordStoreManager.swift; sourceTree = "<group>"; };
+		19F244ADBB93C027EB76F38F /* PasswordStoreManagerTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordStoreManagerTest.swift; sourceTree = "<group>"; };
 		300713C42219D54100F553AC /* AutoCellHeightUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCellHeightUITableViewController.swift; sourceTree = "<group>"; };
 		301F6462216162550071A4CE /* AdditionField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionField.swift; sourceTree = "<group>"; };
 		301F6467216165290071A4CE /* ConstantsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsTest.swift; sourceTree = "<group>"; };
@@ -768,6 +772,7 @@
 				A2699ACE24027D9500F36323 /* PasswordTableEntryTest.swift */,
 				30B0485F209A5141001013CA /* PasswordTest.swift */,
 				54025A6C408C208E78DA2A51 /* PasswordStoreRegistryTest.swift */,
+				19F244ADBB93C027EB76F38F /* PasswordStoreManagerTest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -971,6 +976,7 @@
 				A2699ACC2402631400F36323 /* PasswordTableEntry.swift */,
 				D326B03C0E95C12C00DF3BAD /* PasswordStoreConfig.swift */,
 				A80F05CCDB74C55EF962721B /* PasswordStoreRegistry.swift */,
+				17ACDE0712F5BEFC8F6FA852 /* PasswordStoreManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1674,6 +1680,7 @@
 				30BAC8CD22E3BB9700438475 /* KeyStore.swift in Sources */,
 				57BF87CAF5375E5EC35FF504 /* PasswordStoreConfig.swift in Sources */,
 				BDA5205597805CDF5E5ED446 /* PasswordStoreRegistry.swift in Sources */,
+				B8C4F76D9E5BC1969DCEC108 /* PasswordStoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1707,6 +1714,7 @@
 				DC64745D2D29BEA9004B4BBC /* CoreDataTestCase.swift in Sources */,
 				30A1D29C21AF451E00E2D1F7 /* PasswordGeneratorFlavorTest.swift in Sources */,
 				7EA9DD2979A26B815D87389B /* PasswordStoreRegistryTest.swift in Sources */,
+				80F4794927A70C9622E1BFC9 /* PasswordStoreManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
