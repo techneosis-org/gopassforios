@@ -2053,6 +2053,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-D BETA";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techneosis.gopassforiosbeta;
+				PRODUCT_MODULE_NAME = Pass;
 				PRODUCT_NAME = "gopass Beta";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -2679,6 +2680,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techneosis.gopassforios;
+				PRODUCT_MODULE_NAME = Pass;
 				PRODUCT_NAME = gopass;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -2746,6 +2748,7 @@
 				MARKETING_VERSION = 0.19.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techneosis.gopassforios;
+				PRODUCT_MODULE_NAME = Pass;
 				PRODUCT_NAME = gopass;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
