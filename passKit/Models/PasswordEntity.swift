@@ -92,16 +92,16 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
         return (try? context.fetch(request) as? [Self]) ?? []
     }
 
-    public static func fetch(by path: String, in context: NSManagedObjectContext) -> PasswordEntity? {
+    public static func fetch(by path: String, store: String, in context: NSManagedObjectContext) -> PasswordEntity? {
         let request = Self.fetchRequest()
-        request.predicate = NSPredicate(format: "path = %@", path)
+        request.predicate = NSPredicate(format: "path = %@ and store = %@", path, store)
         return try? context.fetch(request).first as? Self
     }
 
-    public static func fetch(by path: String, isDir: Bool, in context: NSManagedObjectContext) -> PasswordEntity? {
+    public static func fetch(by path: String, isDir: Bool, store: String, in context: NSManagedObjectContext) -> PasswordEntity? {
         let request = Self.fetchRequest()
 
-        request.predicate = NSPredicate(format: "path = %@ and isDir = %@", path, isDir as NSNumber)
+        request.predicate = NSPredicate(format: "path = %@ and isDir = %@ and store = %@", path, isDir as NSNumber, store)
         return try? context.fetch(request).first as? Self
     }
 
@@ -137,9 +137,9 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
         _ = try? context.execute(deleteRequest)
     }
 
-    public static func exists(password: Password, in context: NSManagedObjectContext) -> Bool {
+    public static func exists(password: Password, store: String, in context: NSManagedObjectContext) -> Bool {
         let request = fetchRequest()
-        request.predicate = NSPredicate(format: "name = %@ and path = %@ and isDir = false", password.name, password.path)
+        request.predicate = NSPredicate(format: "name = %@ and path = %@ and isDir = false and store = %@", password.name, password.path, store)
         if let count = try? context.count(for: request) {
             return count > 0
         }

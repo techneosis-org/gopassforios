@@ -54,7 +54,7 @@ final class PasswordEntityTest: CoreDataTestCase {
         let context = controller.viewContext()
         PasswordEntity.insert(name: "1", path: "path1", isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
         PasswordEntity.insert(name: "2", path: "path2", isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
-        let passwordEntity = PasswordEntity.fetch(by: "path1", in: context)!
+        let passwordEntity = PasswordEntity.fetch(by: "path1", store: PasswordStoreConfig.legacyStoreID, in: context)!
         XCTAssertEqual(passwordEntity.path, "path1")
         XCTAssertEqual(passwordEntity.name, "1")
     }

@@ -24,6 +24,11 @@ public class PasswordStore {
 
     public var storeURL: URL
 
+    /// Identity of this store, used to scope its entries in the shared
+    /// database. Fixed for now; it becomes per-mount once several stores can
+    /// be configured.
+    public let storeID: String
+
     public var gitRepository: GitRepository?
 
     public var gitSignatureForNow: GTSignature? {
@@ -84,8 +89,9 @@ public class PasswordStore {
         gitRepository?.numberOfCommits()
     }
 
-    init(url: URL = Globals.repositoryURL) {
+    init(url: URL = Globals.repositoryURL, storeID: String = PasswordStoreConfig.legacyStoreID) {
         self.storeURL = url
+        self.storeID = storeID
 
         // Migration
         importExistingKeysIntoKeychain()
@@ -159,7 +165,7 @@ public class PasswordStore {
     }
 
     private func initPasswordEntityCoreData() {
-        PasswordEntity.initPasswordEntityCoreData(url: storeURL, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: storeURL, store: storeID, in: context)
         saveUpdatedContext()
     }
 
@@ -183,7 +189,7 @@ public class PasswordStore {
     }
 
     public func fetchPasswordEntity(with path: String) -> PasswordEntity? {
-        PasswordEntity.fetch(by: path, in: context)
+        PasswordEntity.fetch(by: path, store: storeID, in: context)
     }
 
     public func setAllSynced() {
@@ -228,7 +234,7 @@ public class PasswordStore {
     }
 
     private func addPasswordEntities(password: Password) throws -> PasswordEntity? {
-        guard !PasswordEntity.exists(password: password, in: context) else {
+        guard !PasswordEntity.exists(password: password, store: storeID, in: context) else {
             throw AppError.passwordDuplicated
         }
 
@@ -242,16 +248,16 @@ public class PasswordStore {
         var parentPasswordEntity: PasswordEntity?
         for (index, path) in paths.reversed().enumerated() {
             if index == paths.count - 1 {
-                let passwordEntity = PasswordEntity.insert(name: password.name, path: path, isDir: false, store: PasswordStoreConfig.legacyStoreID, into: context)
+                let passwordEntity = PasswordEntity.insert(name: password.name, path: path, isDir: false, store: storeID, into: context)
                 passwordEntity.parent = parentPasswordEntity
                 parentPasswordEntity = passwordEntity
             } else {
-                if let passwordEntity = PasswordEntity.fetch(by: path, isDir: true, in: context) {
+                if let passwordEntity = PasswordEntity.fetch(by: path, isDir: true, store: storeID, in: context) {
                     passwordEntity.isSynced = false
                     parentPasswordEntity = passwordEntity
                 } else {
                     let name = (path as NSString).lastPathComponent
-                    let passwordEntity = PasswordEntity.insert(name: name, path: path, isDir: true, store: PasswordStoreConfig.legacyStoreID, into: context)
+                    let passwordEntity = PasswordEntity.insert(name: name, path: path, isDir: true, store: storeID, into: context)
                     passwordEntity.parent = parentPasswordEntity
                     parentPasswordEntity = passwordEntity
                 }
