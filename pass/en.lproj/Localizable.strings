@@ -355,6 +355,7 @@ Finally, copy them to a location accessible by the Files app.";
 
 /* Multiple stores */
 "Stores"                                = "Stores";
+"ChooseStore"                           = "Add to which store?";
 "OriginalStore"                         = "ORIGINAL STORE";
 "MountedStores"                         = "MOUNTED STORES";
 "OriginalStoreExplanation."             = "The store this app was set up with. Change its remote from Settings.";

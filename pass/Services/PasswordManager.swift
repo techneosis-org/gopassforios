@@ -27,8 +27,8 @@ class PasswordManager {
         }
     }
 
-    func addPassword(with password: Password) {
-        encryptPassword(in: viewController, with: password) {
+    func addPassword(with password: Password, into store: PasswordStore) {
+        encryptPassword(in: viewController, with: password, into: store) {
             SVProgressHUD.setDefaultMaskType(.black)
             SVProgressHUD.setDefaultStyle(.light)
             SVProgressHUD.showSuccess(withStatus: "Done".localize())

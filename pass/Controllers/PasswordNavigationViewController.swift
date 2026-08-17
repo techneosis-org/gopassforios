@@ -380,7 +380,7 @@ extension PasswordNavigationViewController {
     @IBAction
     private func saveAddPassword(segue: UIStoryboardSegue) {
         if let controller = segue.source as? AddPasswordTableViewController {
-            passwordManager.addPassword(with: controller.password!)
+            addPassword(controller.password!)
         }
     }
 }
@@ -497,6 +497,30 @@ extension PasswordNavigationViewController: UITabBarControllerDelegate {
 }
 
 extension PasswordNavigationViewController: PasswordAlertPresenter {
+    /// New passwords go into the store being browsed. Only at the root, where
+    /// several mounts are listed side by side, is the destination ambiguous
+    /// enough to be worth asking about.
+    private func addPassword(_ password: Password) {
+        if let entity = parentPasswordEntity, let store = PasswordStoreManager.shared.store(for: entity) {
+            passwordManager.addPassword(with: password, into: store)
+            return
+        }
+        let stores = PasswordStoreManager.shared.allStores
+        guard stores.count > 1 else {
+            passwordManager.addPassword(with: password, into: stores[0])
+            return
+        }
+        let alert = UIAlertController(title: "ChooseStore".localize(), message: nil, preferredStyle: .actionSheet)
+        for store in stores {
+            alert.addAction(UIAlertAction(title: store.mountName, style: .default) { _ in
+                self.passwordManager.addPassword(with: password, into: store)
+            })
+        }
+        alert.addAction(UIAlertAction.cancel())
+        alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(alert, animated: true)
+    }
+
     @objc
     private func showStores() {
         navigationController?.pushViewController(StoreListViewController(), animated: true)
