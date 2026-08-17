@@ -73,6 +73,6 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
 
 extension CredentialProviderViewController: PasswordSelectionDelegate {
     func selected(password: PasswordTableEntry) {
-        credentialProvider.persistAndProvideCredentials(with: password.passwordEntity.path)
+        credentialProvider.persistAndProvideCredentials(with: PasswordStoreManager.shared.qualifiedPath(for: password.passwordEntity) ?? password.passwordEntity.path)
     }
 }

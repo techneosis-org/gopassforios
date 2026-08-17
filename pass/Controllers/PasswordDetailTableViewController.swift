@@ -25,7 +25,11 @@ class PasswordDetailTableViewController: UITableViewController, UIGestureRecogni
     private var passwordImage: UIImage?
     private var oneTimePasswordIndexPath: IndexPath?
     private var shouldPopCurrentView = false
-    private let passwordStore = PasswordStore.shared
+    /// Resolved from the entry rather than fixed, so a password opened from a
+    /// mounted store reads and writes against that store's checkout.
+    private var passwordStore: PasswordStore {
+        passwordEntity.flatMap { PasswordStoreManager.shared.store(for: $0) } ?? PasswordStore.shared
+    }
 
     // preserve path so it can be reloaded even if the passwordEntity is deleted during the update process
     private var passwordPath: String?
@@ -549,7 +553,7 @@ extension PasswordDetailTableViewController {
         DispatchQueue.main.async {
             if let path = self.passwordPath {
                 // reload PasswordEntity because all PasswordEntities are re-created on PasswordStore update
-                self.passwordEntity = PasswordStore.shared.fetchPasswordEntity(with: path)
+                self.passwordEntity = PasswordStoreManager.shared.resolve(qualifiedPath: path)?.entity ?? PasswordStore.shared.fetchPasswordEntity(with: path)
 
                 // dismiss if the PasswordEntity does not exist anymore
                 if self.passwordEntity == nil {
@@ -593,7 +597,7 @@ extension PasswordDetailTableViewController {
             handleError(error: AppError.other(message: "PasswordDoesNotExist"))
             return
         }
-        let encryptedDataPath = passwordEntity.fileURL(in: PasswordStore.shared.storeURL)
+        let encryptedDataPath = passwordEntity.fileURL(in: passwordStore.storeURL)
 
         guard let encryptedData = try? Data(contentsOf: encryptedDataPath) else {
             handleError(error: AppError.other(message: "PasswordDoesNotExist"))

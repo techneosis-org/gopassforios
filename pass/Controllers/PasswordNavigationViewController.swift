@@ -265,7 +265,7 @@ class PasswordNavigationViewController: UIViewController {
                 if passwordTableEntry.isDir {
                     return
                 }
-                passwordManager.providePasswordPasteboard(with: passwordTableEntry.passwordEntity.path)
+                passwordManager.providePasswordPasteboard(with: PasswordStoreManager.shared.qualifiedPath(for: passwordTableEntry.passwordEntity) ?? passwordTableEntry.passwordEntity.path)
             }
         }
     }

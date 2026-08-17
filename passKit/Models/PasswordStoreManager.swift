@@ -108,6 +108,28 @@ public final class PasswordStoreManager {
         return nil
     }
 
+    /// Decrypts whatever a stored identifier refers to, in the store that owns
+    /// it. Identifiers written before stores existed are bare paths, so those
+    /// still resolve against the original store — otherwise every AutoFill
+    /// entry saved by an earlier version would stop working after an upgrade.
+    public func decrypt(identifier: String, keyID: String? = nil, requestPGPKeyPassphrase: @escaping (String) -> String) throws -> Password {
+        if let (store, entity) = resolve(qualifiedPath: identifier) {
+            return try decrypt(entity, in: store, keyID: keyID, requestPGPKeyPassphrase: requestPGPKeyPassphrase)
+        }
+        let original = legacyStore()
+        guard let entity = original.fetchPasswordEntity(with: identifier) else {
+            throw AppError.passwordFileNotFound(path: identifier)
+        }
+        return try decrypt(entity, in: original, keyID: keyID, requestPGPKeyPassphrase: requestPGPKeyPassphrase)
+    }
+
+    private func decrypt(_ entity: PasswordEntity, in store: PasswordStore, keyID: String?, requestPGPKeyPassphrase: @escaping (String) -> String) throws -> Password {
+        if Defaults.isEnableGPGIDOn {
+            return try store.decrypt(passwordEntity: entity, keyID: keyID, requestPGPKeyPassphrase: requestPGPKeyPassphrase)
+        }
+        return try store.decrypt(passwordEntity: entity, requestPGPKeyPassphrase: requestPGPKeyPassphrase)
+    }
+
     /// Drops a cached store, so the next request reopens its repository. Used
     /// after a mount is removed or re-cloned.
     public func forget(configID: UUID) {

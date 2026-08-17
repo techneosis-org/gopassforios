@@ -89,9 +89,9 @@ extension ExtensionViewController: PasswordSelectionDelegate {
     func selected(password: PasswordTableEntry) {
         switch action {
         case .findLogin:
-            credentialProvider.provideCredentialsFindLogin(with: password.passwordEntity.path)
+            credentialProvider.provideCredentialsFindLogin(with: PasswordStoreManager.shared.qualifiedPath(for: password.passwordEntity) ?? password.passwordEntity.path)
         case .fillBrowser:
-            credentialProvider.provideCredentialsBrowser(with: password.passwordEntity.path)
+            credentialProvider.provideCredentialsBrowser(with: PasswordStoreManager.shared.qualifiedPath(for: password.passwordEntity) ?? password.passwordEntity.path)
         default:
             extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
         }

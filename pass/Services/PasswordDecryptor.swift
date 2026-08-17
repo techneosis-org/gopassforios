@@ -31,7 +31,7 @@ func decryptPassword(
     DispatchQueue.global(qos: .userInteractive).async {
         do {
             let requestPGPKeyPassphrase = Utils.createRequestPGPKeyPassphraseHandler(controller: controller)
-            let decryptedPassword = try PasswordStore.shared.decrypt(path: passwordPath, keyID: keyID, requestPGPKeyPassphrase: requestPGPKeyPassphrase)
+            let decryptedPassword = try PasswordStoreManager.shared.decrypt(identifier: passwordPath, keyID: keyID, requestPGPKeyPassphrase: requestPGPKeyPassphrase)
 
             DispatchQueue.main.async {
                 completion(decryptedPassword)
