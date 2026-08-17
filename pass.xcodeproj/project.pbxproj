@@ -16,8 +16,6 @@
 		301F646D216166AA0071A4CE /* AdditionFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301F646C216166AA0071A4CE /* AdditionFieldTest.swift */; };
 		302269B323E634B000F843A3 /* PGPKeyFIleImportTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302269B223E634B000F843A3 /* PGPKeyFIleImportTableViewController.swift */; };
 		302B2C9822C2BDE700D831EE /* AppKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B2C9722C2BDE700D831EE /* AppKeychain.swift */; };
-		8A7150122F60000100C7A64D /* ObjectiveCExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A7150102F60000100C7A64D /* ObjectiveCExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8A7150132F60000100C7A64D /* ObjectiveCExceptionCatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7150112F60000100C7A64D /* ObjectiveCExceptionCatcher.m */; };
 		302E85612125ECC70031BA64 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302E85602125ECC70031BA64 /* Parser.swift */; };
 		302E85632125EE550031BA64 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302E85622125EE550031BA64 /* Constants.swift */; };
 		3032327422C7F710009EBD9C /* KeyFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3032327322C7F710009EBD9C /* KeyFileManager.swift */; };
@@ -113,12 +111,15 @@
 		556EC3D922335D2800934F9C /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 30BF5ED521ED2434000E4154 /* Localizable.stringsdict */; };
 		556EC3DA22335D3400934F9C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30C25DBF21F3599E00BB27BB /* InfoPlist.strings */; };
 		556EC3DB22335D3D00934F9C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30C25DBF21F3599E00BB27BB /* InfoPlist.strings */; };
+		57BF87CAF5375E5EC35FF504 /* PasswordStoreConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D326B03C0E95C12C00DF3BAD /* PasswordStoreConfig.swift */; };
 		5F9D7B0D27AF6F7500A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5F9D7B0E27AF6FCA00A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5F9D7B0F27AF6FD200A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8A4716692F5EF56900C7A64D /* AppKeychainTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4716682F5EF56900C7A64D /* AppKeychainTest.swift */; };
 		8A4716712F5EF7A900C7A64D /* PersistenceControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A47166F2F5EF7A900C7A64D /* PersistenceControllerTest.swift */; };
 		8A4756A32F6374CC00131B6D /* PersistenceController+UnitTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4756A22F6374B700131B6D /* PersistenceController+UnitTestHelpers.swift */; };
+		8A7150122F60000100C7A64D /* ObjectiveCExceptionCatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A7150102F60000100C7A64D /* ObjectiveCExceptionCatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8A7150132F60000100C7A64D /* ObjectiveCExceptionCatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7150112F60000100C7A64D /* ObjectiveCExceptionCatcher.m */; };
 		8AD8EBF32F5E2723007475AB /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 8AD8EBF22F5E268D007475AB /* Fixtures */; };
 		9A1D1CE526E5D1CE0052028E /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = 9A1D1CE426E5D1CE0052028E /* OneTimePassword */; };
 		9A1D1CE726E5D2230052028E /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = 9A1D1CE626E5D2230052028E /* OneTimePassword */; };
@@ -207,8 +208,8 @@
 		DC64745F2D45B240004B4BBC /* GitRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC64745E2D45B23A004B4BBC /* GitRepository.swift */; };
 		DC6474612D46A8F8004B4BBC /* GitRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6474602D46A8F2004B4BBC /* GitRepositoryTest.swift */; };
 		DC7CBBBD2D0FA3F2003BB4D2 /* YubiKit in Frameworks */ = {isa = PBXBuildFile; productRef = DC7CBBBC2D0FA3F2003BB4D2 /* YubiKit */; };
-		DC7CBBC22D0FA3F2003BB4D3 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = DC7CBBC12D0FA3F2003BB4D3 /* DequeModule */; };
 		DC7CBBBF2D0FAC92003BB4D2 /* YKFSmartCardInterfaceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7CBBBE2D0FAC8E003BB4D2 /* YKFSmartCardInterfaceExtension.swift */; };
+		DC7CBBC22D0FA3F2003BB4D3 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = DC7CBBC12D0FA3F2003BB4D3 /* DequeModule */; };
 		DC8963C01E38EEB900828B09 /* SSHKeyURLImportTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8963BF1E38EEB900828B09 /* SSHKeyURLImportTableViewController.swift */; };
 		DC917BD71E2E8231000FDF54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC917BD61E2E8231000FDF54 /* AppDelegate.swift */; };
 		DC917BDC1E2E8231000FDF54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC917BDA1E2E8231000FDF54 /* Main.storyboard */; };
@@ -346,8 +347,6 @@
 		302202EE222F14E400555236 /* SearchBarScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarScope.swift; sourceTree = "<group>"; };
 		302269B223E634B000F843A3 /* PGPKeyFIleImportTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGPKeyFIleImportTableViewController.swift; sourceTree = "<group>"; };
 		302B2C9722C2BDE700D831EE /* AppKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeychain.swift; sourceTree = "<group>"; };
-		8A7150102F60000100C7A64D /* ObjectiveCExceptionCatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveCExceptionCatcher.h; sourceTree = "<group>"; };
-		8A7150112F60000100C7A64D /* ObjectiveCExceptionCatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjectiveCExceptionCatcher.m; sourceTree = "<group>"; };
 		302E85602125ECC70031BA64 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		302E85622125EE550031BA64 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3032327322C7F710009EBD9C /* KeyFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyFileManager.swift; sourceTree = "<group>"; };
@@ -434,6 +433,8 @@
 		8A4716682F5EF56900C7A64D /* AppKeychainTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeychainTest.swift; sourceTree = "<group>"; };
 		8A47166F2F5EF7A900C7A64D /* PersistenceControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceControllerTest.swift; sourceTree = "<group>"; };
 		8A4756A22F6374B700131B6D /* PersistenceController+UnitTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistenceController+UnitTestHelpers.swift"; sourceTree = "<group>"; };
+		8A7150102F60000100C7A64D /* ObjectiveCExceptionCatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveCExceptionCatcher.h; sourceTree = "<group>"; };
+		8A7150112F60000100C7A64D /* ObjectiveCExceptionCatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjectiveCExceptionCatcher.m; sourceTree = "<group>"; };
 		8AD8EBF22F5E268D007475AB /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = "<group>"; };
 		9A1EF0B324C50DD80074FEAC /* passBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = passBeta.entitlements; sourceTree = "<group>"; };
 		9A1EF0B424C50E780074FEAC /* passBetaAutoFillExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = passBetaAutoFillExtension.entitlements; sourceTree = "<group>"; };
@@ -487,6 +488,7 @@
 		A2AA934322DE30DD00D79A00 /* PGPAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGPAgent.swift; sourceTree = "<group>"; };
 		A2AA934522DE3A8000D79A00 /* PGPAgentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGPAgentTest.swift; sourceTree = "<group>"; };
 		A2BC54C71EEE5669001FAFBD /* Objective-CBridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Objective-CBridgingHeader.h"; sourceTree = "<group>"; };
+		D326B03C0E95C12C00DF3BAD /* PasswordStoreConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordStoreConfig.swift; sourceTree = "<group>"; };
 		DC037CA51E4B883900609409 /* OpenSourceComponentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSourceComponentsTableViewController.swift; sourceTree = "<group>"; };
 		DC037CA71E4B898100609409 /* BasicStaticTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicStaticTableViewController.swift; sourceTree = "<group>"; };
 		DC037CA91E4B8EAE00609409 /* SpecialThanksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialThanksTableViewController.swift; sourceTree = "<group>"; };
@@ -962,6 +964,7 @@
 				30697C3F21F63CAA0064FCAC /* PasswordEntity.swift */,
 				30697C4321F63CAB0064FCAC /* PasswordStore.swift */,
 				A2699ACC2402631400F36323 /* PasswordTableEntry.swift */,
+				D326B03C0E95C12C00DF3BAD /* PasswordStoreConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1419,9 +1422,9 @@
 				30ED1775276F8842009BA876 /* XCRemoteSwiftPackageReference "objective-git-swift-package" */,
 				307CA2322CF348260099F6DE /* XCRemoteSwiftPackageReference "SwiftFormat" */,
 				307CB7522CF9219100D0931F /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
-				30333B292CF922D9008A2EA2 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
-				DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios" */,
-				DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				30333B292CF922D9008A2EA2 /* XCRemoteSwiftPackageReference "SwiftLintPlugins.git" */,
+				DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios.git" */,
+				DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections.git" */,
 			);
 			productRefGroup = DC917BD41E2E8231000FDF54 /* Products */;
 			projectDirPath = "";
@@ -1663,6 +1666,7 @@
 				30697C4521F63CAB0064FCAC /* Password.swift in Sources */,
 				30697C4421F63CAB0064FCAC /* PasswordEntity.swift in Sources */,
 				30BAC8CD22E3BB9700438475 /* KeyStore.swift in Sources */,
+				57BF87CAF5375E5EC35FF504 /* PasswordStoreConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2939,7 +2943,7 @@
 				minimumVersion = 0.99.2;
 			};
 		};
-		30333B292CF922D9008A2EA2 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+		30333B292CF922D9008A2EA2 /* XCRemoteSwiftPackageReference "SwiftLintPlugins.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins.git";
 			requirement = {
@@ -2987,7 +2991,7 @@
 				revision = 8d59e4abba762d0f1e9aed161081f7b3fe21daa0;
 			};
 		};
-		DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios" */ = {
+		DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Yubico/yubikit-ios.git";
 			requirement = {
@@ -2995,7 +2999,7 @@
 				minimumVersion = 4.7.0;
 			};
 		};
-		DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+		DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
 			requirement = {
@@ -3108,12 +3112,12 @@
 		};
 		DC7CBBBC2D0FA3F2003BB4D2 /* YubiKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios" */;
+			package = DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios.git" */;
 			productName = YubiKit;
 		};
 		DC7CBBC12D0FA3F2003BB4D3 /* DequeModule */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			package = DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
 			productName = DequeModule;
 		};
 /* End XCSwiftPackageProductDependency section */
