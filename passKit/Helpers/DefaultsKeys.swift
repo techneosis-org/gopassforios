@@ -60,6 +60,11 @@ public extension DefaultsKeys {
 
     var passwordStores: DefaultsKey<[PasswordStoreConfig]> { DefaultsKey("passwordStores", defaultValue: []) }
 
+    /// Mount name of the store that predates multi-store support. It has no
+    /// configuration entry, but still needs a name to label its subtree and to
+    /// qualify its paths.
+    var legacyStoreName: DefaultsKey<String> { DefaultsKey("legacyStoreName", defaultValue: "store") }
+
     var isHideUnknownOn: DefaultsKey<Bool> { DefaultsKey("isHideUnknownOn", defaultValue: false) }
     var isHideOTPOn: DefaultsKey<Bool> { DefaultsKey("isHideOTPOn", defaultValue: false) }
     var isRememberPGPPassphraseOn: DefaultsKey<Bool> { DefaultsKey("isRememberPGPPassphraseOn", defaultValue: false) }

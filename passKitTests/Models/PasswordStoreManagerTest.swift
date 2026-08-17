@@ -3,11 +3,12 @@
 //  passKitTests
 //
 
+import CoreData
 import XCTest
 
 @testable import passKit
 
-final class PasswordStoreManagerTest: XCTestCase {
+final class PasswordStoreManagerTest: CoreDataTestCase {
     private var registry: PasswordStoreRegistry!
     private var manager: PasswordStoreManager!
 
@@ -21,8 +22,12 @@ final class PasswordStoreManagerTest: XCTestCase {
     /// unrelated tests.
     private var legacyStub: PasswordStore!
 
-    override func setUp() {
-        super.setUp()
+    private var context: NSManagedObjectContext { controller.viewContext() }
+    private var originalLegacyName: String!
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        originalLegacyName = Defaults.legacyStoreName
         registry = PasswordStoreRegistry()
         registry.configs = []
         let stub = PasswordStore(
@@ -34,6 +39,7 @@ final class PasswordStoreManagerTest: XCTestCase {
     }
 
     override func tearDown() {
+        Defaults.legacyStoreName = originalLegacyName
         registry.configs = []
         registry = nil
         manager = nil
@@ -117,5 +123,51 @@ final class PasswordStoreManagerTest: XCTestCase {
 
         XCTAssertEqual(PasswordStore.gitPasswordKey(forStore: legacy), Globals.gitPassword)
         XCTAssertEqual(PasswordStore.gitSSHPrivateKeyPassphraseKey(forStore: legacy), Globals.gitSSHPrivateKeyPassphrase)
+    }
+
+    // MARK: - qualified paths
+
+    func testQualifiedPathCombinesMountAndPath() throws {
+        let config = makeConfig(name: "work")
+        try registry.add(config)
+        let store = manager.store(for: config)
+        let entity = PasswordEntity.insert(name: "bill.com", path: "bill.com.gpg", isDir: false, store: store.storeID, into: context)
+
+        XCTAssertEqual(manager.qualifiedPath(for: entity), "work/bill.com.gpg")
+    }
+
+    func testQualifiedPathIsNilForAnUnconfiguredStore() {
+        let entity = PasswordEntity.insert(name: "orphan", path: "orphan.gpg", isDir: false, store: UUID().uuidString, into: context)
+
+        XCTAssertNil(manager.qualifiedPath(for: entity))
+    }
+
+    /// The same relative path in two mounts has to stay distinguishable —
+    /// this is the whole reason paths are qualified.
+    func testIdenticalPathsInDifferentStoresQualifyDifferently() throws {
+        let personal = makeConfig(name: "personal")
+        let work = makeConfig(name: "work")
+        try registry.add(personal)
+        try registry.add(work)
+
+        let inPersonal = PasswordEntity.insert(name: "amazon", path: "amazon.gpg", isDir: false, store: manager.store(for: personal).storeID, into: context)
+        let inWork = PasswordEntity.insert(name: "amazon", path: "amazon.gpg", isDir: false, store: manager.store(for: work).storeID, into: context)
+
+        XCTAssertEqual(manager.qualifiedPath(for: inPersonal), "personal/amazon.gpg")
+        XCTAssertEqual(manager.qualifiedPath(for: inWork), "work/amazon.gpg")
+        XCTAssertNotEqual(manager.qualifiedPath(for: inPersonal), manager.qualifiedPath(for: inWork))
+    }
+
+    func testLegacyStoreIsNamedFromDefaults() {
+        Defaults.legacyStoreName = "mine"
+
+        XCTAssertEqual(manager.name(forStore: PasswordStoreConfig.legacyStoreID), "mine")
+    }
+
+    func testAllStoresLeadsWithTheOriginalStore() throws {
+        try registry.add(makeConfig(name: "work"))
+
+        XCTAssertEqual(manager.allStores.first?.storeID, legacyStub.storeID)
+        XCTAssertEqual(manager.allStores.count, 2)
     }
 }

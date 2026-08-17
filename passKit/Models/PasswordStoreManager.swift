@@ -60,6 +60,54 @@ public final class PasswordStoreManager {
         return store(for: config)
     }
 
+    /// Every store, the original one first, then the configured mounts.
+    public var allStores: [PasswordStore] {
+        [legacyStore()] + stores
+    }
+
+    /// The store an entry was read from.
+    public func store(for entity: PasswordEntity) -> PasswordStore? {
+        store(withID: entity.store)
+    }
+
+    /// Mount name of a store, or nil if it is no longer configured.
+    public func name(forStore id: String) -> String? {
+        if id == PasswordStoreConfig.legacyStoreID {
+            return Defaults.legacyStoreName
+        }
+        guard let uuid = UUID(uuidString: id) else {
+            return nil
+        }
+        return registry.config(withID: uuid)?.name
+    }
+
+    /// How an entry is named across the whole app: its mount, then its path
+    /// within that mount. Paths repeat between stores, mount names do not, so
+    /// this is what anything holding a reference to a password should use —
+    /// AutoFill records it, and it is what the user sees.
+    public func qualifiedPath(for entity: PasswordEntity) -> String? {
+        guard let name = name(forStore: entity.store) else {
+            return nil
+        }
+        return "\(name)/\(entity.path)"
+    }
+
+    /// Resolves a qualified path back to its store and entry.
+    public func resolve(qualifiedPath: String) -> (store: PasswordStore, entity: PasswordEntity)? {
+        let parts = qualifiedPath.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: false)
+        guard parts.count == 2 else {
+            return nil
+        }
+        let mount = String(parts[0])
+        let path = String(parts[1])
+        for store in allStores where name(forStore: store.storeID) == mount {
+            if let entity = store.fetchPasswordEntity(with: path) {
+                return (store, entity)
+            }
+        }
+        return nil
+    }
+
     /// Drops a cached store, so the next request reopens its repository. Used
     /// after a mount is removed or re-cloned.
     public func forget(configID: UUID) {
