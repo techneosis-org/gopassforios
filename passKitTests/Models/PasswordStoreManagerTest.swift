@@ -99,4 +99,23 @@ final class PasswordStoreManagerTest: XCTestCase {
 
         XCTAssertFalse(manager.store(for: config) === first)
     }
+
+    func testCredentialKeysAreScopedPerStore() {
+        let personal = manager.store(for: makeConfig(name: "personal"))
+        let work = manager.store(for: makeConfig(name: "work"))
+
+        XCTAssertNotEqual(personal.gitPasswordKey, work.gitPasswordKey)
+        XCTAssertNotEqual(personal.gitSSHPrivateKeyPassphraseKey, work.gitSSHPrivateKeyPassphraseKey)
+    }
+
+    /// The original store must keep writing to the unsuffixed keys, otherwise
+    /// an upgrade would lose the git credentials already saved on the device.
+    /// Asserted against the derivation rather than a constructed store, since
+    /// building one with the legacy identifier runs the key migration.
+    func testLegacyStoreKeepsTheOriginalCredentialKeys() {
+        let legacy = PasswordStoreConfig.legacyStoreID
+
+        XCTAssertEqual(PasswordStore.gitPasswordKey(forStore: legacy), Globals.gitPassword)
+        XCTAssertEqual(PasswordStore.gitSSHPrivateKeyPassphraseKey(forStore: legacy), Globals.gitSSHPrivateKeyPassphrase)
+    }
 }

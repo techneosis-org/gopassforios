@@ -37,21 +37,39 @@ public class PasswordStore {
         return GTSignature(name: gitSignatureName, email: gitSignatureEmail, time: Date())
     }
 
+    /// Keychain keys are scoped to the store, so two mounts pointing at
+    /// different remotes do not overwrite each other's saved credentials. The
+    /// original store keeps the unsuffixed keys it already wrote, so existing
+    /// credentials survive.
+    static func gitPasswordKey(forStore storeID: String) -> String {
+        storeID == PasswordStoreConfig.legacyStoreID ? Globals.gitPassword : "\(Globals.gitPassword).\(storeID)"
+    }
+
+    static func gitSSHPrivateKeyPassphraseKey(forStore storeID: String) -> String {
+        storeID == PasswordStoreConfig.legacyStoreID
+            ? Globals.gitSSHPrivateKeyPassphrase
+            : "\(Globals.gitSSHPrivateKeyPassphrase).\(storeID)"
+    }
+
+    var gitPasswordKey: String { Self.gitPasswordKey(forStore: storeID) }
+
+    var gitSSHPrivateKeyPassphraseKey: String { Self.gitSSHPrivateKeyPassphraseKey(forStore: storeID) }
+
     public var gitPassword: String? {
         get {
-            AppKeychain.shared.get(for: Globals.gitPassword)
+            AppKeychain.shared.get(for: gitPasswordKey)
         }
         set {
-            AppKeychain.shared.add(string: newValue, for: Globals.gitPassword)
+            AppKeychain.shared.add(string: newValue, for: gitPasswordKey)
         }
     }
 
     public var gitSSHPrivateKeyPassphrase: String? {
         get {
-            AppKeychain.shared.get(for: Globals.gitSSHPrivateKeyPassphrase)
+            AppKeychain.shared.get(for: gitSSHPrivateKeyPassphraseKey)
         }
         set {
-            AppKeychain.shared.add(string: newValue, for: Globals.gitSSHPrivateKeyPassphrase)
+            AppKeychain.shared.add(string: newValue, for: gitSSHPrivateKeyPassphraseKey)
         }
     }
 
