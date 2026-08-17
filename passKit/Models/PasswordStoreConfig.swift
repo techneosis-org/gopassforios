@@ -62,12 +62,12 @@ public struct PasswordStoreConfig: Codable, Equatable, Identifiable {
 // conforms to `DefaultsSerializable` as a `RawRepresentable`, and
 // `DefaultsKeys.swift` declares `Bridge` typealiases for both the `Codable` and
 // the `RawRepresentable` case. A type matching both leaves `Bridge` ambiguous.
-extension PasswordStoreConfig {
+public extension PasswordStoreConfig {
     private enum CodingKeys: String, CodingKey {
         case id, name, gitURL, branchName, authenticationMethod, username
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let rawMethod = try container.decode(String.self, forKey: .authenticationMethod)
         guard let method = GitAuthenticationMethod(rawValue: rawMethod) else {
@@ -87,7 +87,7 @@ extension PasswordStoreConfig {
         )
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
