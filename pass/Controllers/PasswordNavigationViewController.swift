@@ -503,7 +503,9 @@ extension PasswordNavigationViewController: PasswordAlertPresenter {
     }
 
     private func syncPasswords() {
-        guard PasswordStore.shared.repositoryExists() else {
+        let manager = PasswordStoreManager.shared
+        let stores = manager.allStores.filter { $0.repositoryExists() }
+        guard !stores.isEmpty else {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(800)) {
                 Utils.alert(title: "Error".localize(), message: "NoPasswordStore.".localize(), controller: self, completion: nil)
             }
@@ -512,55 +514,70 @@ extension PasswordNavigationViewController: PasswordAlertPresenter {
         SVProgressHUD.setDefaultMaskType(.black)
         SVProgressHUD.setDefaultStyle(.light)
         SVProgressHUD.show(withStatus: "SyncingPasswordStore".localize())
-        let keychain = AppKeychain.shared
-        var gitCredential: GitCredential {
-            GitCredential.from(
-                authenticationMethod: Defaults.gitAuthenticationMethod,
-                userName: Defaults.gitUsername,
-                keyStore: keychain
-            )
-        }
+
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            do {
-                let pullOptions = gitCredential.getCredentialOptions(passwordProvider: present)
-                try PasswordStore.shared.pullRepository(options: pullOptions) { git_transfer_progress, _ in
-                    DispatchQueue.main.async {
-                        SVProgressHUD.showProgress(Float(git_transfer_progress.pointee.received_objects) / Float(git_transfer_progress.pointee.total_objects), status: "PullingFromRemoteRepository".localize())
-                    }
+            var failures: [(mount: String, error: NSError)] = []
+            for store in stores {
+                do {
+                    try sync(store, using: manager.credential(forStore: store))
+                } catch let error as NSError {
+                    // One unreachable remote must not stop the others syncing,
+                    // so failures are collected and reported together.
+                    failures.append((store.mountName, error))
                 }
-                if PasswordStore.shared.numberOfLocalCommits > 0 {
-                    let pushOptions = gitCredential.getCredentialOptions(passwordProvider: present)
-                    try PasswordStore.shared.pushRepository(options: pushOptions) { current, total, _, _ in
-                        DispatchQueue.main.async {
-                            SVProgressHUD.showProgress(Float(current) / Float(total), status: "PushingToRemoteRepository".localize())
-                        }
-                    }
-                }
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: .passwordStoreSyncSucceeded, object: nil)
-                    SVProgressHUD.showSuccess(withStatus: "Done".localize())
-                    SVProgressHUD.dismiss(withDelay: 1)
-                }
-            } catch let error as NSError {
-                gitCredential.delete()
-                DispatchQueue.main.async {
+            }
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .passwordStoreSyncSucceeded, object: nil)
+                guard failures.isEmpty else {
                     SVProgressHUD.dismiss()
-                    var message = error.localizedDescription
-                    if let underlyingError = error.userInfo[NSUnderlyingErrorKey] as? NSError {
-                        message = message | "UnderlyingError".localize(underlyingError.localizedDescription)
-                        if underlyingError.localizedDescription.contains("WrongPassphrase".localize()) {
-                            message = message | "RecoverySuggestion.".localize()
-                        }
-                    }
-                    if let mergeConflictFiles = error.userInfo[GTPullMergeConflictedFiles] as? NSArray {
-                        let mergeConflictFilesString = mergeConflictFiles.componentsJoined(by: ", ")
-                        message = message | "MergeConflictError".localize(mergeConflictFilesString)
-                    }
+                    let message = failures.map { "\($0.mount): \(describe($0.error))" }.joined(separator: "\n\n")
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(800)) {
                         Utils.alert(title: "Error".localize(), message: message, controller: self, completion: nil)
                     }
+                    return
                 }
+                SVProgressHUD.showSuccess(withStatus: "Done".localize())
+                SVProgressHUD.dismiss(withDelay: 1)
             }
         }
+    }
+
+    private func sync(_ store: PasswordStore, using credential: GitCredential) throws {
+        do {
+            try store.pullRepository(options: credential.getCredentialOptions(passwordProvider: present)) { progress, _ in
+                let received = progress.pointee
+                guard received.total_objects > 0 else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    SVProgressHUD.showProgress(Float(received.received_objects) / Float(received.total_objects), status: "PullingFromRemoteRepository".localize())
+                }
+            }
+            guard store.numberOfLocalCommits > 0 else {
+                return
+            }
+            try store.pushRepository(options: credential.getCredentialOptions(passwordProvider: present)) { current, total, _, _ in
+                DispatchQueue.main.async {
+                    SVProgressHUD.showProgress(Float(current) / Float(total), status: "PushingToRemoteRepository".localize())
+                }
+            }
+        } catch {
+            credential.delete()
+            throw error
+        }
+    }
+
+    private func describe(_ error: NSError) -> String {
+        var message = error.localizedDescription
+        if let underlyingError = error.userInfo[NSUnderlyingErrorKey] as? NSError {
+            message = message | "UnderlyingError".localize(underlyingError.localizedDescription)
+            if underlyingError.localizedDescription.contains("WrongPassphrase".localize()) {
+                message = message | "RecoverySuggestion.".localize()
+            }
+        }
+        if let mergeConflictFiles = error.userInfo[GTPullMergeConflictedFiles] as? NSArray {
+            message = message | "MergeConflictError".localize(mergeConflictFiles.componentsJoined(by: ", "))
+        }
+        return message
     }
 }

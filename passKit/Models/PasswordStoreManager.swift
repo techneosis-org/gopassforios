@@ -180,6 +180,28 @@ public final class PasswordStoreManager {
         }
     }
 
+    /// The git credential for a store: the configured mount's own settings, or
+    /// the app-wide ones for the original store.
+    public func credential(forStore store: PasswordStore) -> GitCredential {
+        guard
+            store.storeID != PasswordStoreConfig.legacyStoreID,
+            let uuid = UUID(uuidString: store.storeID),
+            let config = registry.config(withID: uuid)
+        else {
+            return GitCredential.from(
+                authenticationMethod: Defaults.gitAuthenticationMethod,
+                userName: Defaults.gitUsername,
+                keyStore: AppKeychain.shared
+            )
+        }
+        return GitCredential.from(
+            authenticationMethod: config.authenticationMethod,
+            userName: config.username,
+            keyStore: AppKeychain.shared,
+            keyStoreKey: config.authenticationMethod == .password ? config.gitPasswordKey : config.gitSSHPrivateKeyPassphraseKey
+        )
+    }
+
     /// Drops a cached store, so the next request reopens its repository. Used
     /// after a mount is removed or re-cloned.
     public func forget(configID: UUID) {
