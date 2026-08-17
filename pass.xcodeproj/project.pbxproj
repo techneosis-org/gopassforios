@@ -115,6 +115,7 @@
 		5F9D7B0D27AF6F7500A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5F9D7B0E27AF6FCA00A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5F9D7B0F27AF6FD200A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7EA9DD2979A26B815D87389B /* PasswordStoreRegistryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54025A6C408C208E78DA2A51 /* PasswordStoreRegistryTest.swift */; };
 		8A4716692F5EF56900C7A64D /* AppKeychainTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4716682F5EF56900C7A64D /* AppKeychainTest.swift */; };
 		8A4716712F5EF7A900C7A64D /* PersistenceControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A47166F2F5EF7A900C7A64D /* PersistenceControllerTest.swift */; };
 		8A4756A32F6374CC00131B6D /* PersistenceController+UnitTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4756A22F6374B700131B6D /* PersistenceController+UnitTestHelpers.swift */; };
@@ -430,6 +431,7 @@
 		30EE3A1B241E98C6009FBB61 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Intents.strings; sourceTree = "<group>"; };
 		30F6C1B327664C7200BE5AB2 /* SVProgressHUD.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SVProgressHUD.xcframework; path = Carthage/Build/SVProgressHUD.xcframework; sourceTree = "<group>"; };
 		30FD2F77214D9E0E005E0A92 /* ParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTest.swift; sourceTree = "<group>"; };
+		54025A6C408C208E78DA2A51 /* PasswordStoreRegistryTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordStoreRegistryTest.swift; sourceTree = "<group>"; };
 		5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
 		8A4716682F5EF56900C7A64D /* AppKeychainTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeychainTest.swift; sourceTree = "<group>"; };
 		8A47166F2F5EF7A900C7A64D /* PersistenceControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceControllerTest.swift; sourceTree = "<group>"; };
@@ -765,6 +767,7 @@
 				9ADC954024418A5F0005402E /* PasswordStoreTest.swift */,
 				A2699ACE24027D9500F36323 /* PasswordTableEntryTest.swift */,
 				30B0485F209A5141001013CA /* PasswordTest.swift */,
+				54025A6C408C208E78DA2A51 /* PasswordStoreRegistryTest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1703,6 +1706,7 @@
 				301F6468216165290071A4CE /* ConstantsTest.swift in Sources */,
 				DC64745D2D29BEA9004B4BBC /* CoreDataTestCase.swift in Sources */,
 				30A1D29C21AF451E00E2D1F7 /* PasswordGeneratorFlavorTest.swift in Sources */,
+				7EA9DD2979A26B815D87389B /* PasswordStoreRegistryTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
