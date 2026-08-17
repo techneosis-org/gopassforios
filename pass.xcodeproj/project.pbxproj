@@ -184,6 +184,7 @@
 		A2A7813F1E97DBD9001311F5 /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7813E1E97DBD9001311F5 /* QRScannerController.swift */; };
 		A2AA934422DE30DD00D79A00 /* PGPAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA934322DE30DD00D79A00 /* PGPAgent.swift */; };
 		A2AA934622DE3A8000D79A00 /* PGPAgentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA934522DE3A8000D79A00 /* PGPAgentTest.swift */; };
+		BDA5205597805CDF5E5ED446 /* PasswordStoreRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80F05CCDB74C55EF962721B /* PasswordStoreRegistry.swift */; };
 		DC037CA61E4B883900609409 /* OpenSourceComponentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC037CA51E4B883900609409 /* OpenSourceComponentsTableViewController.swift */; };
 		DC037CA81E4B898100609409 /* BasicStaticTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC037CA71E4B898100609409 /* BasicStaticTableViewController.swift */; };
 		DC037CAA1E4B8EAE00609409 /* SpecialThanksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC037CA91E4B8EAE00609409 /* SpecialThanksTableViewController.swift */; };
@@ -488,6 +489,7 @@
 		A2AA934322DE30DD00D79A00 /* PGPAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGPAgent.swift; sourceTree = "<group>"; };
 		A2AA934522DE3A8000D79A00 /* PGPAgentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PGPAgentTest.swift; sourceTree = "<group>"; };
 		A2BC54C71EEE5669001FAFBD /* Objective-CBridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Objective-CBridgingHeader.h"; sourceTree = "<group>"; };
+		A80F05CCDB74C55EF962721B /* PasswordStoreRegistry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordStoreRegistry.swift; sourceTree = "<group>"; };
 		D326B03C0E95C12C00DF3BAD /* PasswordStoreConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordStoreConfig.swift; sourceTree = "<group>"; };
 		DC037CA51E4B883900609409 /* OpenSourceComponentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSourceComponentsTableViewController.swift; sourceTree = "<group>"; };
 		DC037CA71E4B898100609409 /* BasicStaticTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicStaticTableViewController.swift; sourceTree = "<group>"; };
@@ -965,6 +967,7 @@
 				30697C4321F63CAB0064FCAC /* PasswordStore.swift */,
 				A2699ACC2402631400F36323 /* PasswordTableEntry.swift */,
 				D326B03C0E95C12C00DF3BAD /* PasswordStoreConfig.swift */,
+				A80F05CCDB74C55EF962721B /* PasswordStoreRegistry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1667,6 +1670,7 @@
 				30697C4421F63CAB0064FCAC /* PasswordEntity.swift in Sources */,
 				30BAC8CD22E3BB9700438475 /* KeyStore.swift in Sources */,
 				57BF87CAF5375E5EC35FF504 /* PasswordStoreConfig.swift in Sources */,
+				BDA5205597805CDF5E5ED446 /* PasswordStoreRegistry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

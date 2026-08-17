@@ -73,6 +73,7 @@
 "KeyImportError."                       = "Cannot import the key.";
 "FileNotFoundError."                    = "File '%@' cannot be read.";
 "PasswordDuplicatedError."              = "Cannot add the password; password is duplicated.";
+"StoreNameDuplicatedError."             = "Cannot add the store; another store already uses that name.";
 "CannotDeleteNonEmptyDirectoryError."   = "Delete passwords from the directory before deleting the directory itself.";
 "GitResetError."                        = "Cannot identify the latest synced commit.";
 "GitCreateSignatureError."              = "Cannot create a valid author/committer signature.";

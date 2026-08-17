@@ -32,6 +32,7 @@ public enum GitAuthenticationMethod: String, DefaultsSerializable {
 }
 
 extension SearchBarScope: DefaultsSerializable {}
+extension PasswordStoreConfig: DefaultsSerializable {}
 extension PasswordGenerator: DefaultsSerializable {}
 
 public extension DefaultsKeys {
@@ -56,6 +57,8 @@ public extension DefaultsKeys {
     var gitSignatureEmail: DefaultsKey<String?> { DefaultsKey("gitSignatureEmail") }
 
     var lastSyncedTime: DefaultsKey<Date?> { DefaultsKey("lastSyncedTime") }
+
+    var passwordStores: DefaultsKey<[PasswordStoreConfig]> { DefaultsKey("passwordStores", defaultValue: []) }
 
     var isHideUnknownOn: DefaultsKey<Bool> { DefaultsKey("isHideUnknownOn", defaultValue: false) }
     var isHideOTPOn: DefaultsKey<Bool> { DefaultsKey("isHideOTPOn", defaultValue: false) }
