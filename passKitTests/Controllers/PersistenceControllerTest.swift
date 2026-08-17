@@ -44,10 +44,10 @@ final class PersistenceControllerTest: XCTestCase {
 
         // After reinitialize, old data should be gone
         // (reinitializePersistentStore rescans PersistenceController's repositoryURL, which
-        // forUnitTests() points at a fresh, isolated temp directory, so the result should be
-        // an empty store regardless of what's on the real device)
+        // forUnitTests() points at a fresh, isolated temp directory, so the only thing left
+        // is the mount root that every rescan creates for the store itself)
         let remaining = PasswordEntity.fetchAll(in: context)
-        XCTAssertEqual(remaining.count, 0)
+        XCTAssertEqual(remaining.filter { !($0.isDir && $0.path.isEmpty) }.count, 0)
     }
 
     func testMultipleControllersAreIndependent() {

@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import SwiftyUserDefaults
 
 public class PersistenceController {
     public static let shared = PersistenceController()
@@ -44,7 +45,7 @@ public class PersistenceController {
                 fatalError("Failed to load persistent stores: \(finalError.localizedDescription)")
             }
         }
-        PasswordEntity.initPasswordEntityCoreData(url: repositoryURL, store: PasswordStoreConfig.legacyStoreID, in: container.viewContext)
+        PasswordEntity.initPasswordEntityCoreData(url: repositoryURL, store: PasswordStoreConfig.legacyStoreID, mountName: Defaults.legacyStoreName, in: container.viewContext)
         try? container.viewContext.save()
     }
 

@@ -181,6 +181,14 @@ class PasswordNavigationViewController: UIViewController {
 
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.rightBarButtonItem = addPasswordUIBarButtonItem
+        if parentPasswordEntity == nil {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: UIImage(systemName: "externaldrive.connected.to.line.below"),
+                style: .plain,
+                target: self,
+                action: #selector(showStores)
+            )
+        }
         navigationItem.searchController = searchController
     }
 
@@ -489,6 +497,11 @@ extension PasswordNavigationViewController: UITabBarControllerDelegate {
 }
 
 extension PasswordNavigationViewController: PasswordAlertPresenter {
+    @objc
+    private func showStores() {
+        navigationController?.pushViewController(StoreListViewController(), animated: true)
+    }
+
     private func syncPasswords() {
         guard PasswordStore.shared.repositoryExists() else {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(800)) {

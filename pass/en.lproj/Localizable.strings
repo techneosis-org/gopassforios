@@ -352,3 +352,21 @@ to get the public and the encryption private subkeys in this specific format. Us
   $ gpg --show-keys subkey
 
 Finally, copy them to a location accessible by the Files app.";
+
+/* Multiple stores */
+"Stores"                                = "Stores";
+"OriginalStore"                         = "ORIGINAL STORE";
+"MountedStores"                         = "MOUNTED STORES";
+"OriginalStoreExplanation."             = "The store this app was set up with. Change its remote from Settings.";
+"RemoveStore?"                          = "Remove store?";
+"RemoveStoreExplanation."               = "Removes “%@” and its local copy from this device. The remote repository is not touched.";
+"AddStore"                              = "Add Store";
+"StoreNamePlaceholder"                  = "personal";
+"URL"                                   = "URL";
+"Branch"                                = "Branch";
+"Username"                              = "Username";
+"Authentication"                        = "Authentication";
+"SSHKey"                                = "SSH Key";
+"CannotAddStore"                        = "Cannot add store";
+"StoreNameRequired."                    = "Give the store a name. It labels the store's entries and must be unique.";
+"StoreURLRequired."                     = "Enter the git URL of the store's repository.";

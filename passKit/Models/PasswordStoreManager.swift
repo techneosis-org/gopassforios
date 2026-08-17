@@ -130,6 +130,56 @@ public final class PasswordStoreManager {
         return try store.decrypt(passwordEntity: entity, requestPGPKeyPassphrase: requestPGPKeyPassphrase)
     }
 
+    /// Registers a new mount.
+    public func add(_ config: PasswordStoreConfig) throws {
+        try registry.add(config)
+    }
+
+    /// Removes a mount: its checkout, its entries, its cached store and its
+    /// configuration. Other stores are untouched.
+    public func remove(_ config: PasswordStoreConfig) {
+        store(for: config).eraseStoreData()
+        forget(configID: config.id)
+        registry.remove(withID: config.id)
+    }
+
+    /// Clones a mount's remote into its own checkout. The store is only kept if
+    /// the clone turns out to be a password store — a repository without a
+    /// .gpg-id is not one, and leaving it configured would give the user a
+    /// mount that can never decrypt anything.
+    public func clone(
+        _ config: PasswordStoreConfig,
+        passwordProvider: @escaping GitCredential.PasswordProvider,
+        transferProgressBlock: @escaping TransferProgressHandler = { _, _ in },
+        checkoutProgressBlock: @escaping CheckoutProgressHandler = { _, _, _ in }
+    ) throws {
+        let store = store(for: config)
+        let credential = GitCredential.from(
+            authenticationMethod: config.authenticationMethod,
+            userName: config.username,
+            keyStore: AppKeychain.shared,
+            keyStoreKey: config.authenticationMethod == .password ? config.gitPasswordKey : config.gitSSHPrivateKeyPassphraseKey
+        )
+        do {
+            try store.cloneRepository(
+                remoteRepoURL: config.gitURL,
+                branchName: config.branchName,
+                options: credential.getCredentialOptions(passwordProvider: passwordProvider),
+                transferProgressBlock: transferProgressBlock,
+                checkoutProgressBlock: checkoutProgressBlock
+            )
+        } catch {
+            store.eraseStoreData()
+            forget(configID: config.id)
+            throw error
+        }
+        guard FileManager.default.fileExists(atPath: store.storeURL.appendingPathComponent(".gpg-id").path) else {
+            store.eraseStoreData()
+            forget(configID: config.id)
+            throw AppError.other(message: "NoProperPassRepo.")
+        }
+    }
+
     /// Drops a cached store, so the next request reopens its repository. Used
     /// after a mount is removed or re-cloned.
     public func forget(configID: UUID) {

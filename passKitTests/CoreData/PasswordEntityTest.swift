@@ -86,6 +86,13 @@ final class PasswordEntityTest: CoreDataTestCase {
         XCTAssertEqual(PasswordEntity.fetchAll(in: context).count, 0)
     }
 
+    /// Entries excluding the synthetic mount root each store now carries. The
+    /// tests below are about what was imported from disk, not about the mount
+    /// itself, so they assert against this.
+    private func importedEntries(in context: NSManagedObjectContext) -> [PasswordEntity] {
+        PasswordEntity.fetchAll(in: context).filter { !($0.isDir && $0.path.isEmpty) }
+    }
+
     // MARK: - initPasswordEntityCoreData tests
 
     func testInitPasswordEntityCoreDataBuildsTree() throws {
@@ -112,10 +119,10 @@ final class PasswordEntityTest: CoreDataTestCase {
         try Data("test5".utf8).write(to: rootDir.appendingPathComponent("notes.txt"))
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, mountName: "test", in: context)
 
         // Verify total counts
-        let allEntities = PasswordEntity.fetchAll(in: context)
+        let allEntities = importedEntries(in: context)
         let files = allEntities.filter { !$0.isDir }
         let dirs = allEntities.filter(\.isDir)
         XCTAssertEqual(files.count, 4) // 4 .gpg, notes.txt is ignored
@@ -134,11 +141,11 @@ final class PasswordEntityTest: CoreDataTestCase {
         XCTAssertNotNil(emailEntity)
         XCTAssertEqual(emailEntity!.children.count, 2)
 
-        // Verify top-level files have no parent (root was deleted)
+        // Top-level files hang under the mount rather than having no parent
         let toplevelEntity = allEntities.first { $0.path == "toplevel.gpg" }
         XCTAssertNotNil(toplevelEntity)
         XCTAssertEqual(toplevelEntity!.name, "toplevel")
-        XCTAssertNil(toplevelEntity!.parent)
+        XCTAssertEqual(toplevelEntity!.parent?.name, "test")
     }
 
     func testInitPasswordEntityCoreDataSkipsHiddenFiles() throws {
@@ -153,9 +160,9 @@ final class PasswordEntityTest: CoreDataTestCase {
         try Data("test".utf8).write(to: rootDir.appendingPathComponent(".git/config"))
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, mountName: "test", in: context)
 
-        let allEntities = PasswordEntity.fetchAll(in: context)
+        let allEntities = importedEntries(in: context)
         XCTAssertEqual(allEntities.count, 1)
         XCTAssertEqual(allEntities.first!.name, "visible")
     }
@@ -171,9 +178,9 @@ final class PasswordEntityTest: CoreDataTestCase {
         try Data("test".utf8).write(to: rootDir.appendingPathComponent("no-extension"))
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, mountName: "test", in: context)
 
-        let allEntities = PasswordEntity.fetchAll(in: context)
+        let allEntities = importedEntries(in: context)
         XCTAssertEqual(allEntities.count, 1)
         XCTAssertEqual(allEntities.first!.name, "email")
     }
@@ -196,16 +203,16 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createSymbolicLink(atPath: webDir.appendingPathComponent("example.org.gpg").path, withDestinationPath: "../example.com.gpg")
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, mountName: "test", in: context)
 
-        let allEntities = PasswordEntity.fetchAll(in: context)
+        let allEntities = importedEntries(in: context)
         XCTAssertEqual(allEntities.filter { !$0.isDir }.count, 3)
 
         let linkEntity = allEntities.first { $0.path == "example.net.gpg" }
         XCTAssertNotNil(linkEntity)
         XCTAssertEqual(linkEntity!.name, "example.net")
         XCTAssertFalse(linkEntity!.isDir)
-        XCTAssertNil(linkEntity!.parent)
+        XCTAssertEqual(linkEntity!.parent?.name, "test")
 
         let nestedLinkEntity = allEntities.first { $0.path == "web/example.org.gpg" }
         XCTAssertNotNil(nestedLinkEntity)
@@ -229,9 +236,9 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createSymbolicLink(atPath: rootDir.appendingPathComponent("mail").path, withDestinationPath: "email")
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, mountName: "test", in: context)
 
-        let allEntities = PasswordEntity.fetchAll(in: context)
+        let allEntities = importedEntries(in: context)
 
         // The linked directory keeps its own name and is traversed under its own path.
         let linkedDir = allEntities.first { $0.path == "mail" }
@@ -260,9 +267,9 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createSymbolicLink(atPath: rootDir.appendingPathComponent("here").path, withDestinationPath: ".")
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, mountName: "test", in: context)
 
-        let allEntities = PasswordEntity.fetchAll(in: context)
+        let allEntities = importedEntries(in: context)
         XCTAssertEqual(Set(allEntities.map(\.path)), ["email", "email/up", "here"])
     }
 
@@ -274,9 +281,9 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createSymbolicLink(atPath: rootDir.appendingPathComponent("broken.gpg").path, withDestinationPath: "missing.gpg")
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, mountName: "test", in: context)
 
-        let allEntities = PasswordEntity.fetchAll(in: context)
+        let allEntities = importedEntries(in: context)
         XCTAssertEqual(allEntities.count, 1)
         XCTAssertEqual(allEntities.first!.name, "broken")
         XCTAssertEqual(allEntities.first!.path, "broken.gpg")
@@ -291,9 +298,9 @@ final class PasswordEntityTest: CoreDataTestCase {
         try FileManager.default.createDirectory(at: rootDir.appendingPathComponent("emptydir"), withIntermediateDirectories: true)
 
         let context = controller.viewContext()
-        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: rootDir, store: PasswordStoreConfig.legacyStoreID, mountName: "test", in: context)
 
-        let allEntities = PasswordEntity.fetchAll(in: context)
+        let allEntities = importedEntries(in: context)
         let dirs = allEntities.filter(\.isDir)
         let files = allEntities.filter { !$0.isDir }
         XCTAssertEqual(dirs.count, 1)

@@ -137,6 +137,17 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
         _ = try? context.execute(deleteRequest)
     }
 
+    /// Removes only one store's entries, so erasing a mount leaves the others
+    /// intact.
+    public static func deleteAll(store: String, in context: NSManagedObjectContext) {
+        // Spelled out rather than reusing fetchRequest(): a batch delete needs
+        // the untyped request, and the typed overload wins inference here.
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "PasswordEntity")
+        request.predicate = NSPredicate(format: "store = %@", store)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        _ = try? context.execute(deleteRequest)
+    }
+
     public static func exists(password: Password, store: String, in context: NSManagedObjectContext) -> Bool {
         let request = fetchRequest()
         request.predicate = NSPredicate(format: "name = %@ and path = %@ and isDir = false and store = %@", password.name, password.path, store)
@@ -157,13 +168,18 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
         return entity
     }
 
-    public static func initPasswordEntityCoreData(url: URL, store: String, in context: NSManagedObjectContext) {
+    public static func initPasswordEntityCoreData(url: URL, store: String, mountName: String, in context: NSManagedObjectContext) {
         let localFileManager = FileManager.default
         let url = url.resolvingSymlinksInPath()
 
+        // The root is kept rather than discarded, named after the mount, so
+        // each store's contents hang beneath it. Without it every store's
+        // top-level entries share a nil parent and are indistinguishable in
+        // the list. Its own path stays empty, so paths under it remain
+        // relative to the store and still resolve to files.
         let root = {
             let entity = PasswordEntity(context: context)
-            entity.name = "root"
+            entity.name = mountName
             entity.isDir = true
             entity.path = ""
             entity.store = store
@@ -208,7 +224,6 @@ public final class PasswordEntity: NSManagedObject, Identifiable {
                 passwordEntity.path = current.path.isEmpty ? name : "\(current.path)/\(name)"
             }
         }
-        context.delete(root)
     }
 }
 

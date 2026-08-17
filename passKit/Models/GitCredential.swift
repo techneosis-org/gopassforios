@@ -15,6 +15,14 @@ public struct GitCredential {
     private let credentialType: CredentialType
     private let keyStore: KeyStore
 
+    /// Keychain key the credential is remembered under. Overridden so that each
+    /// store keeps its own, instead of every mount sharing one entry.
+    private let keyStoreKeyOverride: String?
+
+    private var keyStoreKey: String {
+        keyStoreKeyOverride ?? credentialType.keyStoreKey
+    }
+
     private enum CredentialType {
         case http(userName: String)
         case ssh(userName: String, privateKey: String)
@@ -56,13 +64,13 @@ public struct GitCredential {
         }
     }
 
-    public static func from(authenticationMethod: GitAuthenticationMethod, userName: String, keyStore: KeyStore) -> Self {
+    public static func from(authenticationMethod: GitAuthenticationMethod, userName: String, keyStore: KeyStore, keyStoreKey: String? = nil) -> Self {
         switch authenticationMethod {
         case .password:
-            return Self(credentialType: .http(userName: userName), keyStore: keyStore)
+            return Self(credentialType: .http(userName: userName), keyStore: keyStore, keyStoreKeyOverride: keyStoreKey)
         case .key:
             let privateKey: String = keyStore.get(for: SSHKey.PRIVATE.getKeychainKey()) ?? ""
-            return Self(credentialType: .ssh(userName: userName, privateKey: privateKey), keyStore: keyStore)
+            return Self(credentialType: .ssh(userName: userName, privateKey: privateKey), keyStore: keyStore, keyStoreKeyOverride: keyStoreKey)
         }
     }
 
@@ -89,17 +97,17 @@ public struct GitCredential {
     }
 
     public func delete() {
-        keyStore.removeContent(for: credentialType.keyStoreKey)
+        keyStore.removeContent(for: keyStoreKey)
     }
 
     private func getPassword(attempts: Int, passwordProvider: @escaping PasswordProvider) -> String? {
-        let lastPassword: String? = keyStore.get(for: credentialType.keyStoreKey)
+        let lastPassword: String? = keyStore.get(for: keyStoreKey)
         if lastPassword == nil || attempts != 1 {
             guard let requestedPassword = passwordProvider(credentialType.requestPassphraseMessage, lastPassword) else {
                 return nil
             }
             if Defaults.isRememberGitCredentialPassphraseOn {
-                keyStore.add(string: requestedPassword, for: credentialType.keyStoreKey)
+                keyStore.add(string: requestedPassword, for: keyStoreKey)
             }
             return requestedPassword
         }

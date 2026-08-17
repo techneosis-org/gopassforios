@@ -136,6 +136,12 @@ public class PasswordStore {
         Defaults.remove(\.gitSSHPrivateKeyArmor)
     }
 
+    /// Name this store is shown under. Resolved through the manager so a
+    /// rename is reflected the next time the tree is rebuilt.
+    public var mountName: String {
+        PasswordStoreManager.shared.name(forStore: storeID) ?? storeID
+    }
+
     public func repositoryExists() -> Bool {
         fileManager.fileExists(atPath: storeURL.path)
     }
@@ -186,7 +192,7 @@ public class PasswordStore {
     }
 
     private func initPasswordEntityCoreData() {
-        PasswordEntity.initPasswordEntityCoreData(url: storeURL, store: storeID, in: context)
+        PasswordEntity.initPasswordEntityCoreData(url: storeURL, store: storeID, mountName: mountName, in: context)
         saveUpdatedContext()
     }
 
@@ -363,7 +369,7 @@ public class PasswordStore {
     }
 
     private func deleteCoreData() {
-        PasswordEntity.deleteAll(in: context)
+        PasswordEntity.deleteAll(store: storeID, in: context)
         PersistenceController.shared.save()
     }
 

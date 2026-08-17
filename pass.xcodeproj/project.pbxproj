@@ -117,6 +117,7 @@
 		5F9D7B0F27AF6FD200A8AB22 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7EA9DD2979A26B815D87389B /* PasswordStoreRegistryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54025A6C408C208E78DA2A51 /* PasswordStoreRegistryTest.swift */; };
 		80F4794927A70C9622E1BFC9 /* PasswordStoreManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F244ADBB93C027EB76F38F /* PasswordStoreManagerTest.swift */; };
+		88C5A4E917231211E8237951 /* StoreEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668C11715E411B9017B899CE /* StoreEditViewController.swift */; };
 		8A4716692F5EF56900C7A64D /* AppKeychainTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4716682F5EF56900C7A64D /* AppKeychainTest.swift */; };
 		8A4716712F5EF7A900C7A64D /* PersistenceControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A47166F2F5EF7A900C7A64D /* PersistenceControllerTest.swift */; };
 		8A4756A32F6374CC00131B6D /* PersistenceController+UnitTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4756A22F6374B700131B6D /* PersistenceController+UnitTestHelpers.swift */; };
@@ -188,6 +189,7 @@
 		A2AA934622DE3A8000D79A00 /* PGPAgentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA934522DE3A8000D79A00 /* PGPAgentTest.swift */; };
 		B8C4F76D9E5BC1969DCEC108 /* PasswordStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ACDE0712F5BEFC8F6FA852 /* PasswordStoreManager.swift */; };
 		BDA5205597805CDF5E5ED446 /* PasswordStoreRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80F05CCDB74C55EF962721B /* PasswordStoreRegistry.swift */; };
+		BF5E64BEE9E0ABBBA5B8FD06 /* StoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76273AC2FDB14CE6161BFD1F /* StoreListViewController.swift */; };
 		DC037CA61E4B883900609409 /* OpenSourceComponentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC037CA51E4B883900609409 /* OpenSourceComponentsTableViewController.swift */; };
 		DC037CA81E4B898100609409 /* BasicStaticTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC037CA71E4B898100609409 /* BasicStaticTableViewController.swift */; };
 		DC037CAA1E4B8EAE00609409 /* SpecialThanksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC037CA91E4B8EAE00609409 /* SpecialThanksTableViewController.swift */; };
@@ -437,6 +439,8 @@
 		30FD2F77214D9E0E005E0A92 /* ParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTest.swift; sourceTree = "<group>"; };
 		54025A6C408C208E78DA2A51 /* PasswordStoreRegistryTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordStoreRegistryTest.swift; sourceTree = "<group>"; };
 		5F9D7B0C27AF6F7300A8AB22 /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
+		668C11715E411B9017B899CE /* StoreEditViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreEditViewController.swift; sourceTree = "<group>"; };
+		76273AC2FDB14CE6161BFD1F /* StoreListViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreListViewController.swift; sourceTree = "<group>"; };
 		8A4716682F5EF56900C7A64D /* AppKeychainTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeychainTest.swift; sourceTree = "<group>"; };
 		8A47166F2F5EF7A900C7A64D /* PersistenceControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceControllerTest.swift; sourceTree = "<group>"; };
 		8A4756A22F6374B700131B6D /* PersistenceController+UnitTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistenceController+UnitTestHelpers.swift"; sourceTree = "<group>"; };
@@ -1045,6 +1049,8 @@
 				DCC441531E916382008A90C4 /* SSHKeyArmorImportTableViewController.swift */,
 				30650E7023F82AF8005CCD5E /* SSHKeyFileImportTableViewController.swift */,
 				DC8963BF1E38EEB900828B09 /* SSHKeyURLImportTableViewController.swift */,
+				76273AC2FDB14CE6161BFD1F /* StoreListViewController.swift */,
+				668C11715E411B9017B899CE /* StoreEditViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1434,9 +1440,9 @@
 				30ED1775276F8842009BA876 /* XCRemoteSwiftPackageReference "objective-git-swift-package" */,
 				307CA2322CF348260099F6DE /* XCRemoteSwiftPackageReference "SwiftFormat" */,
 				307CB7522CF9219100D0931F /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
-				30333B292CF922D9008A2EA2 /* XCRemoteSwiftPackageReference "SwiftLintPlugins.git" */,
-				DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios.git" */,
-				DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections.git" */,
+				30333B292CF922D9008A2EA2 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios" */,
+				DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = DC917BD41E2E8231000FDF54 /* Products */;
 			projectDirPath = "";
@@ -1799,6 +1805,8 @@
 				DC917BD71E2E8231000FDF54 /* AppDelegate.swift in Sources */,
 				DC037CBB1E4DD47B00609409 /* TextFieldTableViewCell.swift in Sources */,
 				DCFB77A91E502FF6008DE471 /* PasswordEditorTableViewController.swift in Sources */,
+				BF5E64BEE9E0ABBBA5B8FD06 /* StoreListViewController.swift in Sources */,
+				88C5A4E917231211E8237951 /* StoreEditViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2962,7 +2970,7 @@
 				minimumVersion = 0.99.2;
 			};
 		};
-		30333B292CF922D9008A2EA2 /* XCRemoteSwiftPackageReference "SwiftLintPlugins.git" */ = {
+		30333B292CF922D9008A2EA2 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins.git";
 			requirement = {
@@ -3010,7 +3018,7 @@
 				revision = 8d59e4abba762d0f1e9aed161081f7b3fe21daa0;
 			};
 		};
-		DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios.git" */ = {
+		DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Yubico/yubikit-ios.git";
 			requirement = {
@@ -3018,7 +3026,7 @@
 				minimumVersion = 4.7.0;
 			};
 		};
-		DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections.git" */ = {
+		DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
 			requirement = {
@@ -3131,12 +3139,12 @@
 		};
 		DC7CBBBC2D0FA3F2003BB4D2 /* YubiKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios.git" */;
+			package = DC7CBBBB2D0FA3F2003BB4D2 /* XCRemoteSwiftPackageReference "yubikit-ios" */;
 			productName = YubiKit;
 		};
 		DC7CBBC12D0FA3F2003BB4D3 /* DequeModule */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
+			package = DC7CBBC02D0FA3F2003BB4D3 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = DequeModule;
 		};
 /* End XCSwiftPackageProductDependency section */
