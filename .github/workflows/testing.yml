@@ -28,7 +28,11 @@ jobs:
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
     - name: GopenPGP
-      if: ${{ steps.gopenpgp-cache.outputs.cache-hit == false }}
+      # cache-hit is the string 'true' or 'false'. Comparing it to the boolean
+      # false casts both to numbers, and 'false' becomes NaN, so the old
+      # `== false` was never true and this step was skipped even on a cache
+      # miss — leaving no xcframework to build against.
+      if: steps.gopenpgp-cache.outputs.cache-hit != 'true'
       run: ./scripts/gopenpgp_build.sh
     - name: Testing
       run: bundle exec fastlane test
