@@ -93,8 +93,11 @@ public class PasswordStore {
         self.storeURL = url
         self.storeID = storeID
 
-        // Migration
-        importExistingKeysIntoKeychain()
+        // Migration. Keys live outside any single store, and this clears the
+        // defaults it migrates from, so it must not run once per mount.
+        if storeID == PasswordStoreConfig.legacyStoreID {
+            importExistingKeysIntoKeychain()
+        }
 
         do {
             if fileManager.fileExists(atPath: storeURL.path) {
@@ -116,7 +119,7 @@ public class PasswordStore {
     }
 
     public func repositoryExists() -> Bool {
-        fileManager.fileExists(atPath: Globals.repositoryURL.path)
+        fileManager.fileExists(atPath: storeURL.path)
     }
 
     public func cloneRepository(
